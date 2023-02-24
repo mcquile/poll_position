@@ -1,7 +1,5 @@
-package org.example.controllers;
+package org.example.users;
 
-import org.example.entities.User;
-import org.example.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ public class UserController {
 
     @GetMapping(value = "/users/all/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getAllUsers() {
-        Iterable<User> users = userRepository.findAll();
+        Iterable<UserModel> users = userRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 }

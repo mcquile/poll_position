@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.users;
 
 
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class UserModel {
     @Id
     @GeneratedValue
     @UuidGenerator
