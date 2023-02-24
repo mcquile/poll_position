@@ -25,3 +25,6 @@ hs_err_pid*
 # stuffs for intellij development
 .idea
 target
+
+#Machine Specific Files
+application.properties
