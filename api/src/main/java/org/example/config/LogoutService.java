@@ -3,6 +3,7 @@ package org.example.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.tokens.Token;
 import org.example.tokens.TokenRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,12 +23,15 @@ public class LogoutService implements LogoutHandler {
     ) {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
+
         jwt = authHeader.substring(7);
-        var storedToken = tokenRepository.findByToken(jwt)
+        Token storedToken = tokenRepository.findByToken(jwt)
                 .orElse(null);
+
         if (storedToken != null) {
             storedToken.setExpired(true);
             storedToken.setRevoked(true);

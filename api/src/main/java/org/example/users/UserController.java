@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 
@@ -24,7 +23,7 @@ public class UserController {
 
     @GetMapping(value = "all/")
     public ResponseEntity<Object> getAllUsers() {
-        List<UserResponse> users = StreamSupport.stream(userRepository.findAll().spliterator(), false)
+        List<UserResponse> users = userRepository.findAll().stream()
                 .map(user -> {
                     UserResponse ur = new UserResponse();
                     ur.setEmailAddress(user.getEmail());
