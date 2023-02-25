@@ -14,7 +14,7 @@ CREATE TABLE [Sexes] (
 );
 
 CREATE TABLE [Users] (
-  [UserID] UNIQUEIDENTIFIER NOT NULL,
+  [UserId] binary(16) NOT NULL,
   [FirstName] nvarchar(120) NULL,
   [LastName] nvarchar(120) NULL,
   [BranchID] int FOREIGN KEY REFERENCES Branches NULL,
@@ -22,6 +22,7 @@ CREATE TABLE [Users] (
   [ProfilePicLink] nvarchar(MAX) NULL,
   [Email] nvarchar(250) NOT NULL,
   [SexID] bit FOREIGN KEY REFERENCES Sexes NULL,
+  [role] varchar(255) NULL,
   PRIMARY KEY ([UserID])
 );
 
