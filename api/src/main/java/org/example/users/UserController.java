@@ -1,7 +1,6 @@
 package org.example.users;
 
-import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.users.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 
 @RestController
 @SecurityRequirement(name = SECURITY_CONFIG_NAME)
 @RequestMapping(value = "/api/v1/users/")
 public class UserController {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;

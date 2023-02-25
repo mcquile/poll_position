@@ -1,8 +1,7 @@
 package org.example.config;
 
-import static io.swagger.v3.oas.annotations.enums.SecuritySchemeIn.HEADER;
-import static io.swagger.v3.oas.annotations.enums.SecuritySchemeType.HTTP;
-
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,8 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import lombok.RequiredArgsConstructor;
+import static io.swagger.v3.oas.annotations.enums.SecuritySchemeIn.HEADER;
+import static io.swagger.v3.oas.annotations.enums.SecuritySchemeType.HTTP;
 
 @Configuration
 @EnableWebSecurity
