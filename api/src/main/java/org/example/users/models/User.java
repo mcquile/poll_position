@@ -1,6 +1,5 @@
 package org.example.users.models;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +35,6 @@ public class User implements UserDetails {
     private Date dateOfBirth;
     private String email;
     private String password;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -87,7 +85,6 @@ public class User implements UserDetails {
     public void setUserId(UUID id) {
         this.userId = id;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
