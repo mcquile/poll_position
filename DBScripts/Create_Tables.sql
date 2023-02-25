@@ -23,6 +23,7 @@ CREATE TABLE [Users] (
   [Email] nvarchar(250) NOT NULL,
   [SexID] bit FOREIGN KEY REFERENCES Sexes NULL,
   [role] varchar(255) NULL,
+  [password] varchar(255) NOT NULL,
   PRIMARY KEY ([UserID])
 );
 
