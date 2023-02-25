@@ -1,10 +1,12 @@
 package org.example.users;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-import java.util.UUID;
+import org.example.users.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface UserRepository extends CrudRepository<UserModel, UUID> {
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    Optional<User> findByEmail(String email);
+
 }
