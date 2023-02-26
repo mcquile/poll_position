@@ -3,6 +3,7 @@ package org.example.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.exceptions.NoAuthorisationHeaderException;
 import org.example.tokens.Token;
 import org.example.tokens.TokenRepository;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public class LogoutService implements LogoutHandler {
         final String jwt;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return;
+            throw new NoAuthorisationHeaderException();
         }
 
         jwt = authHeader.substring(7);
