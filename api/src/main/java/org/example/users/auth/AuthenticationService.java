@@ -2,6 +2,7 @@ package org.example.users.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.example.config.JwtService;
+import org.example.exceptions.UserAlreadyExistsException;
 import org.example.tokens.Token;
 import org.example.tokens.TokenRepository;
 import org.example.tokens.TokenType;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,13 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
+
+        Optional<User> u = userRepository.findByEmail(user.getEmail());
+
+        if(u.isPresent()) {
+            throw new UserAlreadyExistsException(user.getEmail());
+        }
+
         User savedUser = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
