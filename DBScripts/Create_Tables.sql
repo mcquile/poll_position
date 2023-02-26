@@ -14,7 +14,7 @@ CREATE TABLE [Sexes] (
 );
 
 CREATE TABLE [Users] (
-  [UserId] binary(16) NOT NULL,
+  [UserId] UNIQUEIDENTIFIER NOT NULL,
   [FirstName] nvarchar(120) NULL,
   [LastName] nvarchar(120) NULL,
   [BranchID] int FOREIGN KEY REFERENCES Branches NULL,
