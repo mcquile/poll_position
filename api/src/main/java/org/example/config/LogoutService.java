@@ -26,7 +26,8 @@ public class LogoutService implements LogoutHandler {
         final String jwt;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new NoAuthorisationHeaderException();
+//            throw new NoAuthorisationHeaderException();
+            return;
         }
 
         jwt = authHeader.substring(7);
