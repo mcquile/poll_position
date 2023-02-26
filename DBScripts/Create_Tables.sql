@@ -27,14 +27,6 @@ CREATE TABLE [Users] (
   PRIMARY KEY ([UserID])
 );
 
-CREATE TABLE [UserCredentials] (
-  [UserCredentialID] int IDENTITY(1,1) NOT NULL,
-  [PasswordHash] char(255) NOT NULL,
-  [UserID] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users NOT NULL,
-  [Salt] varchar(MAX) NOT NULL,
-  PRIMARY KEY ([UserCredentialID])
-);
-
 CREATE TABLE [Polls] (
   [PollID] UNIQUEIDENTIFIER NOT NULL,
   [PollCreator] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users NOT NULL,
