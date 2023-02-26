@@ -2,6 +2,7 @@ package org.example.users.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.example.config.JwtService;
+import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
 import org.example.tokens.Token;
 import org.example.tokens.TokenRepository;
@@ -37,7 +38,7 @@ public class AuthenticationService {
 
         Optional<User> u = userRepository.findByEmail(user.getEmail());
 
-        if(u.isPresent()) {
+        if (u.isPresent()) {
             throw new UserAlreadyExistsException(user.getEmail());
         }
 
@@ -56,11 +57,18 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
-        String jwtToken = jwtService.generateToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
+
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+
+        if (user.isEmpty()) {
+            throw new InvalidLoginCredentialsException();
+        }
+
+        User u = user.get();
+        String jwtToken = jwtService.generateToken(u);
+        revokeAllUserTokens(u);
+        saveUserToken(u, jwtToken);
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

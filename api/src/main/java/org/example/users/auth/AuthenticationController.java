@@ -1,6 +1,7 @@
 package org.example.users.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate/")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(service.authenticate(request));
+    public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request) {
+        try {
+            return ResponseEntity.ok(service.authenticate(request));
+        } catch (InvalidLoginCredentialsException invalidLoginCredentialsException) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Invalid login credentials");
+        }
     }
 }
