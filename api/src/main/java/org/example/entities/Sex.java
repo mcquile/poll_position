@@ -8,15 +8,15 @@ import jakarta.persistence.Table;
 @Table(name = "Sexes")
 public class Sex {
     @Id
-    private boolean id;
+    private boolean sexId;
 
     private String name;
-    public boolean isId() {
-        return id;
+    public boolean isSexId() {
+        return sexId;
     }
 
-    public void setId(boolean id) {
-        this.id = id;
+    public void setSexId(boolean id) {
+        this.sexId = id;
     }
 
     public String getName() {
