@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Branches")
 public class Branch {
-
   @Id
   private long branchId;
   private String branchName;
