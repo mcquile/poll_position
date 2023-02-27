@@ -86,12 +86,7 @@ public class AuthenticationService {
     }
 
     private void revokeAllUserTokens(User user) {
-        List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(user.getUserId());
-
-        if (validUserTokens.isEmpty()) {
-            return;
-        }
-
+        List<Token> validUserTokens = tokenRepository.findTokensByUserAndExpiredAndRevoked(user, false, false);
         validUserTokens.forEach(token -> {
             token.setExpired(true);
             token.setRevoked(true);
