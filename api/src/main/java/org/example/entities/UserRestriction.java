@@ -1,10 +1,8 @@
 package org.example.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import org.example.polls.models.Poll;
 
 @Entity
@@ -16,12 +14,16 @@ public class UserRestriction {
   private String firstNamePattern;
   private String lastNamePattern;
   @ManyToOne
+  @JoinColumn(name = "sexRestrictedTo")
   private Sex sexRestrictedTo;
   @ManyToOne
+  @JoinColumn(name = "branchRestriction")
   private Branch branchRestriction;
   private java.sql.Date dateOfBirthYounger;
   private java.sql.Date dateOfBirthOlder;
   @ManyToOne
+  @JoinColumn(name = "PollId")
+  @JsonBackReference
   private Poll poll;
 
 

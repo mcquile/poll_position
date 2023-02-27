@@ -1,9 +1,13 @@
 package org.example.polls.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.example.entities.SpecificUserRestriction;
+import org.example.entities.UserRestriction;
 import org.example.users.models.User;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +27,13 @@ public class Poll {
   private java.sql.Timestamp voteEnd;
   private java.sql.Timestamp nominationEndTime;
   private java.sql.Timestamp pollCreationTime;
+
+  @OneToMany(mappedBy = "poll")
+  @JsonManagedReference
+  private List<UserRestriction> userRestrictions;
+  @OneToMany(mappedBy = "poll")
+  @JsonManagedReference
+  private List<SpecificUserRestriction> specificUserRestrictions;
 
 
   public UUID getPollId() {
@@ -96,4 +107,19 @@ public class Poll {
     this.pollCreationTime = pollCreationTime;
   }
 
+  public List<UserRestriction> getUserRestrictions() {
+    return userRestrictions;
+  }
+
+  public void setUserRestrictions(List<UserRestriction> userRestrictions) {
+    this.userRestrictions = userRestrictions;
+  }
+
+  public List<SpecificUserRestriction> getSpecificUserRestrictions() {
+    return specificUserRestrictions;
+  }
+
+  public void setSpecificUserRestrictions(List<SpecificUserRestriction> specificUserRestrictions) {
+    this.specificUserRestrictions = specificUserRestrictions;
+  }
 }

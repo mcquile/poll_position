@@ -1,20 +1,24 @@
 package org.example.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import org.example.polls.models.Poll;
 import org.example.users.models.User;
 
 @Entity
+@Table(name = "SpecificUserRestrictions")
 public class SpecificUserRestriction {
 
     @Id
     private long specificUserRestrictionID;
     @ManyToOne
+    @JoinColumn(name = "PollId")
+    @JsonBackReference
     private Poll poll;
     @ManyToOne
+    @JoinColumn(name = "UserId")
+    @JsonBackReference
     private User user;
     private boolean restricted;
 

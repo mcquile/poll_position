@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 
@@ -29,8 +29,9 @@ public class PollController {
     }
 
     @GetMapping
-    ResponseEntity<Iterable<Poll>> getAllPolls(){
-        return ResponseEntity.status(HttpStatus.OK).body(pollRepository.findAll());
+    ResponseEntity<Stream<Poll>> getAllPolls(){
+        Stream<Poll> allPolls =pollRepository.findAllBy().stream();
+        return ResponseEntity.status(HttpStatus.OK).body(allPolls);
     }
 
     @PostMapping
