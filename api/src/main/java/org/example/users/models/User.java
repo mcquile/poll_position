@@ -1,11 +1,13 @@
 package org.example.users.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entities.Branch;
+import org.example.entities.Sex;
 import org.example.tokens.Token;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,13 +31,14 @@ public class User implements UserDetails {
     @UuidGenerator
     private UUID userId;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Token> tokens;
     @ManyToOne
     @JoinColumn(name = "branchID")
     private Branch branch;
     @ManyToOne
     @JoinColumn(name = "sexId")
-    private Branch sex;
+    private Sex sex;
     private String firstName;
     private String lastName;
     private String profilePicLink;
@@ -53,11 +56,11 @@ public class User implements UserDetails {
         this.branch = branch;
     }
 
-    public Branch getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    public void setSex(Branch sex) {
+    public void setSex(Sex sex) {
         this.sex = sex;
     }
 

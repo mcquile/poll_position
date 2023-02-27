@@ -1,5 +1,6 @@
 package org.example.tokens;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,7 @@ public class Token {
     public boolean expired;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     public User user;
 }
