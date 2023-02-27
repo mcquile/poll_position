@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private List<Token> tokens;
     private String firstName;
     private String lastName;
-    private String profilePicLink;
+        private String profilePicLink;
     private Date dateOfBirth;
     private String email;
     private String password;
