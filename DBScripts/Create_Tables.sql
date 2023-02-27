@@ -1,4 +1,4 @@
-USE PollPositionDB
+USE PollPositionDB;
 GO
 
 CREATE TABLE [Branches] (
@@ -67,7 +67,7 @@ CREATE TABLE [UserVotes] (
 );
 
 CREATE TABLE [SpecificUserRestrictions](
-	[AllowedUserForPollID] int IDENTITY(1,1) NOT NULL,
+	[SpecificUserRestrictionID] int IDENTITY(1,1) NOT NULL,
 	[PollID] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Polls NOT NULL,
 	[UserID] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users NOT NULL,
 	[Restricted] bit NOT NULL
