@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.entities.Branch;
 import org.example.tokens.Token;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,14 +30,36 @@ public class User implements UserDetails {
     private UUID userId;
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+    @ManyToOne
+    @JoinColumn(name = "branchID")
+    private Branch branch;
+    @ManyToOne
+    @JoinColumn(name = "sexId")
+    private Branch sex;
     private String firstName;
     private String lastName;
-        private String profilePicLink;
+    private String profilePicLink;
     private Date dateOfBirth;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public Branch getSex() {
+        return sex;
+    }
+
+    public void setSex(Branch sex) {
+        this.sex = sex;
+    }
 
     public String getFirstName() {
         return firstName;
