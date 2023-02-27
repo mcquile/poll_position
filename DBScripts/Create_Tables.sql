@@ -14,7 +14,7 @@ CREATE TABLE [Sexes] (
 );
 
 CREATE TABLE [Users] (
-  [UserID] UNIQUEIDENTIFIER NOT NULL,
+  [UserId] UNIQUEIDENTIFIER NOT NULL,
   [FirstName] nvarchar(120) NULL,
   [LastName] nvarchar(120) NULL,
   [BranchID] int FOREIGN KEY REFERENCES Branches NULL,
@@ -22,15 +22,9 @@ CREATE TABLE [Users] (
   [ProfilePicLink] nvarchar(MAX) NULL,
   [Email] nvarchar(250) NOT NULL,
   [SexID] bit FOREIGN KEY REFERENCES Sexes NULL,
+  [role] varchar(255) NULL,
+  [password] varchar(255) NOT NULL,
   PRIMARY KEY ([UserID])
-);
-
-CREATE TABLE [UserCredentials] (
-  [UserCredentialID] int IDENTITY(1,1) NOT NULL,
-  [PasswordHash] char(255) NOT NULL,
-  [UserID] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users NOT NULL,
-  [Salt] varchar(MAX) NOT NULL,
-  PRIMARY KEY ([UserCredentialID])
 );
 
 CREATE TABLE [Polls] (
