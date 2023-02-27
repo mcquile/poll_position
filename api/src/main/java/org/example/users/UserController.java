@@ -13,7 +13,7 @@ import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 
 @RestController
 @SecurityRequirement(name = SECURITY_CONFIG_NAME)
-@RequestMapping(value = "/api/v1/users/")
+@RequestMapping(value = "/api/v1/users")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -21,7 +21,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping(value = "all/")
+    @GetMapping
     public ResponseEntity<Object> getAllUsers() {
         List<UserResponse> users = userRepository.findAll().stream()
                 .map(user -> {
