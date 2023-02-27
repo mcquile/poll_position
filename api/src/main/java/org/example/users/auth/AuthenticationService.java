@@ -27,7 +27,13 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
+        Optional<User> u = userRepository.findByEmail(request.getEmail());
+
+        if (u.isPresent()) {
+            throw new UserAlreadyExistsException(request.getEmail());
+        }
+
         User user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
@@ -35,12 +41,6 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-
-        Optional<User> u = userRepository.findByEmail(user.getEmail());
-
-        if (u.isPresent()) {
-            throw new UserAlreadyExistsException(user.getEmail());
-        }
 
         User savedUser = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
@@ -50,7 +50,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws InvalidLoginCredentialsException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
