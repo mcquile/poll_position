@@ -4,6 +4,7 @@ package org.example.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import org.example.polls.models.Poll;
 import org.example.users.models.User;
 
 @Entity

@@ -1,6 +1,7 @@
 package org.example.users;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.example.users.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +24,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
-        List<UserResponse> users = userRepository.findAll().stream()
-                .map(user -> {
-                    UserResponse ur = new UserResponse();
-                    ur.setEmailAddress(user.getEmail());
-                    ur.setFirstName(user.getFirstName());
-                    ur.setLastName(user.getLastName());
-                    return ur;
-                }).toList();
+        List<User> users = userRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 }

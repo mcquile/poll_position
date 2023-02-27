@@ -1,8 +1,8 @@
-package org.example.entities;
+package org.example.polls.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.example.users.models.User;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -11,8 +11,12 @@ import java.util.UUID;
 public class Poll {
 
   @Id
+  @GeneratedValue
+  @UuidGenerator
   private UUID pollId;
-  private String pollCreator;
+  @ManyToOne
+  @JoinColumn(name = "pollCreator")
+  private User pollCreator;
   private String title;
   private String description;
   private java.sql.Timestamp voteStart;
@@ -30,11 +34,11 @@ public class Poll {
   }
 
 
-  public String getPollCreator() {
+  public User getPollCreator() {
     return pollCreator;
   }
 
-  public void setPollCreator(String pollCreator) {
+  public void setPollCreator(User pollCreator) {
     this.pollCreator = pollCreator;
   }
 
