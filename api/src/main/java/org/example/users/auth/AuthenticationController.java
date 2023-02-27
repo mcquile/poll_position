@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/users/auth")
 @RequiredArgsConstructor
@@ -21,13 +24,16 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.register(request));
         } catch (UserAlreadyExistsException userAlreadyExistsException) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "This email address already has a user associated with it.");
+
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body("This email address already has a user associated with it.");
+                    .body(response);
         }
     }
 
-    @PostMapping("/authenticate/")
+    @PostMapping("/login/")
     public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request) {
         try {
             return ResponseEntity.ok(service.authenticate(request));
