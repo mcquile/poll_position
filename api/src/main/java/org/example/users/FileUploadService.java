@@ -1,4 +1,4 @@
-package org.example.users.services;
+package org.example.users;
 
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
