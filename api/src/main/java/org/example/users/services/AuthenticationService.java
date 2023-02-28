@@ -1,4 +1,4 @@
-package org.example.users.auth;
+package org.example.users.services;
 
 import lombok.RequiredArgsConstructor;
 import org.example.config.JwtService;
@@ -8,6 +8,9 @@ import org.example.tokens.Token;
 import org.example.tokens.TokenRepository;
 import org.example.tokens.TokenType;
 import org.example.users.UserRepository;
+import org.example.users.auth.AuthenticationRequest;
+import org.example.users.auth.AuthenticationResponse;
+import org.example.users.auth.RegisterRequest;
 import org.example.users.models.Role;
 import org.example.users.models.User;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -6,6 +6,7 @@ import org.example.branches.BranchRepository;
 import org.example.branches.models.Branch;
 import org.example.users.dto.UserDTO;
 import org.example.users.models.User;
+import org.example.users.services.FileUploadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
