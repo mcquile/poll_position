@@ -1,24 +1,35 @@
-package org.example.entities;
+package org.example.nominations.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import org.example.polls.models.Poll;
 import org.example.users.models.User;
+import org.example.votes.models.UserVote;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Nominations")
 public class Nomination {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long nominationId;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JsonBackReference
+  @JoinColumn(name = "pollId")
   private Poll poll;
   private String nominee;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JsonBackReference
+  @JoinColumn(name = "nominator")
   private User nominator;
+
+  @OneToMany(mappedBy = "nomination", cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<UserVote> votes;
 
 
   public long getNominationId() {
@@ -56,4 +67,11 @@ public class Nomination {
     this.nominator = nominator;
   }
 
+  public List<UserVote> getVotes() {
+    return votes;
+  }
+
+  public void setVotes(List<UserVote> votes) {
+    this.votes = votes;
+  }
 }
