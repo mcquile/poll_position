@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.branches.models;
 
 
 import jakarta.persistence.Entity;

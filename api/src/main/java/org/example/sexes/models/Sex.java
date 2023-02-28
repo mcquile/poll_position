@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.sexes.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,7 +11,7 @@ public class Sex {
     private boolean sexId;
 
     private String name;
-    public boolean isSexId() {
+    public boolean getSexId() {
         return sexId;
     }
 
