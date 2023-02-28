@@ -9,8 +9,8 @@ import jakarta.persistence.Table;
 public class Sex {
     @Id
     private boolean sexId;
-
     private String name;
+
     public boolean getSexId() {
         return sexId;
     }

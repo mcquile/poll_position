@@ -5,4 +5,3 @@ public class InvalidLoginCredentialsException extends Exception {
         super("Invalid login credentials provided");
     }
 }
-

@@ -5,4 +5,3 @@ public class NoAuthorisationHeaderException extends Exception {
         super("No authorisation header present in request");
     }
 }
-

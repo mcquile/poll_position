@@ -5,4 +5,3 @@ public class UserAlreadyExistsException extends Exception {
         super(String.format("A user attribute %s already exists.", property));
     }
 }
-
