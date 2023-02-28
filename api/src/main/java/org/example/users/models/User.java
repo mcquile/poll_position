@@ -60,8 +60,8 @@ public class User implements UserDetails {
         return sex;
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setSex(String sex) {
+        this.sex.setName(sex);
     }
 
     public String getFirstName() {
