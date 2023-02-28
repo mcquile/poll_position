@@ -170,7 +170,7 @@ public class PollController {
         UserRestriction restriction = new UserRestriction();
         restriction.setPoll(poll);
         if(restrictionDTO.branchName().isPresent()){
-            Optional<Branch> branch = branchRepository.getBranchByBranchName(restrictionDTO.branchName().get());
+            Optional<Branch> branch = branchRepository.findBranchByBranchNameEqualsIgnoreCase(restrictionDTO.branchName().get());
             if(branch.isEmpty()){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unknown Branch name: "+restrictionDTO.branchName().get());
             }
