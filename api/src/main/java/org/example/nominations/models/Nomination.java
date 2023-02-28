@@ -14,64 +14,64 @@ import java.util.List;
 @Table(name = "Nominations")
 public class Nomination {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long nominationId;
-  @ManyToOne(cascade = CascadeType.PERSIST)
-  @JsonBackReference
-  @JoinColumn(name = "pollId")
-  private Poll poll;
-  private String nominee;
-  @ManyToOne(cascade = CascadeType.PERSIST)
-  @JsonBackReference
-  @JoinColumn(name = "nominator")
-  private User nominator;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long nominationId;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonBackReference
+    @JoinColumn(name = "pollId")
+    private Poll poll;
+    private String nominee;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonBackReference
+    @JoinColumn(name = "nominator")
+    private User nominator;
 
-  @OneToMany(mappedBy = "nomination", cascade = CascadeType.ALL)
-  @JsonManagedReference
-  private List<UserVote> votes;
-
-
-  public long getNominationId() {
-    return nominationId;
-  }
-
-  public void setNominationId(long nominationId) {
-    this.nominationId = nominationId;
-  }
+    @OneToMany(mappedBy = "nomination", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<UserVote> votes;
 
 
-  public Poll getPoll() {
-    return poll;
-  }
+    public long getNominationId() {
+        return nominationId;
+    }
 
-  public void setPoll(Poll poll) {
-    this.poll = poll;
-  }
-
-
-  public String getNominee() {
-    return nominee;
-  }
-
-  public void setNominee(String nominee) {
-    this.nominee = nominee;
-  }
+    public void setNominationId(long nominationId) {
+        this.nominationId = nominationId;
+    }
 
 
-  public User getNominator() {
-    return nominator;
-  }
+    public Poll getPoll() {
+        return poll;
+    }
 
-  public void setNominator(User nominator) {
-    this.nominator = nominator;
-  }
+    public void setPoll(Poll poll) {
+        this.poll = poll;
+    }
 
-  public List<UserVote> getVotes() {
-    return votes;
-  }
 
-  public void setVotes(List<UserVote> votes) {
-    this.votes = votes;
-  }
+    public String getNominee() {
+        return nominee;
+    }
+
+    public void setNominee(String nominee) {
+        this.nominee = nominee;
+    }
+
+
+    public User getNominator() {
+        return nominator;
+    }
+
+    public void setNominator(User nominator) {
+        this.nominator = nominator;
+    }
+
+    public List<UserVote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<UserVote> votes) {
+        this.votes = votes;
+    }
 }
