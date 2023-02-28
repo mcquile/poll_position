@@ -1,9 +1,8 @@
-package org.example.entities;
+package org.example.votes.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import org.example.nominations.models.Nomination;
 import org.example.users.models.User;
 
 @Entity
@@ -11,21 +10,21 @@ import org.example.users.models.User;
 public class UserVote {
 
   @Id
-  private long userVoteId;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long userVote;
   @ManyToOne
+  @JsonBackReference
+  @JoinColumn(name = "userId")
   private User user;
   @ManyToOne
+  @JsonBackReference
+  @JoinColumn(name = "nominationId")
   private Nomination nomination;
 
 
-  public long getUserVoteId() {
-    return userVoteId;
+  public long getUserVote() {
+    return userVote;
   }
-
-  public void setUserVoteId(long userVoteId) {
-    this.userVoteId = userVoteId;
-  }
-
 
   public User getUser() {
     return user;

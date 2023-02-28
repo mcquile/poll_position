@@ -3,6 +3,9 @@ package org.example.polls;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.branches.BranchRepository;
 import org.example.branches.models.Branch;
+import org.example.nominations.NominationRepository;
+import org.example.nominations.models.Nomination;
+import org.example.nominations.models.dto.NominationDTO;
 import org.example.sexes.SexRepository;
 import org.example.sexes.models.Sex;
 import org.example.restrictions.models.SpecificUserRestriction;
@@ -14,18 +17,18 @@ import org.example.restrictions.models.dto.SpecificUserRestrictionDTO;
 import org.example.restrictions.models.dto.UserRestrictionDTO;
 import org.example.users.UserRepository;
 import org.example.users.models.User;
+import org.example.votes.UserVoteRepository;
+import org.example.votes.models.UserVote;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URI;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -42,12 +45,16 @@ public class PollController {
     private final BranchRepository branchRepository;
 
     private final SexRepository sexRepository;
+    private final NominationRepository nominationRepository;
+    private final UserVoteRepository userVoteRepository;
 
-    public PollController(PollRepository pollRepository, UserRepository userRepository, BranchRepository branchRepository, SexRepository sexRepository) {
+    public PollController(PollRepository pollRepository, UserRepository userRepository, BranchRepository branchRepository, SexRepository sexRepository, NominationRepository nominationRepository, UserVoteRepository userVoteRepository) {
         this.pollRepository = pollRepository;
         this.userRepository = userRepository;
         this.branchRepository = branchRepository;
         this.sexRepository = sexRepository;
+        this.nominationRepository = nominationRepository;
+        this.userVoteRepository = userVoteRepository;
     }
 
     private boolean isUserAllowedToVote(Poll poll, User user){
@@ -136,46 +143,138 @@ public class PollController {
         if(pollDTO.specificUserRestrictions().isPresent()){
             List<SpecificUserRestriction> restrictions = new ArrayList<>();
             for(SpecificUserRestrictionDTO restrictionDTO : pollDTO.specificUserRestrictions().get()){
-                SpecificUserRestriction restriction = new SpecificUserRestriction();
-                restriction.setPoll(poll);
-                restriction.setRestricted(restrictionDTO.restricted());
-                restriction.setUser(getUserFromEmail(restrictionDTO.email()));
-                restrictions.add(restriction);
+                restrictions.add(createSpecificRestrictionFromDTO(restrictionDTO,poll));
             }
             poll.setSpecificUserRestrictions(restrictions);
         }
         if(pollDTO.genericRestrictions().isPresent()) {
             List<UserRestriction> restrictions = new ArrayList<>();
             for (UserRestrictionDTO restrictionDTO : pollDTO.genericRestrictions().get()) {
-                UserRestriction restriction = new UserRestriction();
-                restriction.setPoll(poll);
-                if(restrictionDTO.branchName().isPresent()){
-                    Optional<Branch> branch = branchRepository.getBranchByBranchName(restrictionDTO.branchName().get());
-                    if(branch.isEmpty()){
-                        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unknown Branch name: "+restrictionDTO.branchName().get());
-                    }
-                    restriction.setBranchRestriction(branch.get());
-                }
-                if(restrictionDTO.male().isPresent()){
-                    Sex sex = sexRepository.getSexBySexId(restrictionDTO.male().get());
-                    restriction.setSexRestrictedTo(sex);
-                }
-                if(restrictionDTO.firstNamePattern().isPresent()){
-                    restriction.setFirstNamePattern(restrictionDTO.firstNamePattern().get());
-                }
-                if(restrictionDTO.lastNamePattern().isPresent()){
-                    restriction.setLastNamePattern(restrictionDTO.lastNamePattern().get());
-                }
-                if(restrictionDTO.olderThan().isPresent()){
-                    restriction.setDateOfBirthOlder(restrictionDTO.olderThan().get());
-                }
-                if(restrictionDTO.youngerThan().isPresent()){
-                    restriction.setDateOfBirthYounger(restrictionDTO.youngerThan().get());
-                }
-                restrictions.add(restriction);
+                restrictions.add(createGenericRestrictionFromDTO(restrictionDTO,poll));
             }
             poll.setUserRestrictions(restrictions);
         }
         pollRepository.save(poll);
+    }
+
+    private SpecificUserRestriction createSpecificRestrictionFromDTO(SpecificUserRestrictionDTO restrictionDTO, Poll poll){
+        SpecificUserRestriction restriction = new SpecificUserRestriction();
+        restriction.setPoll(poll);
+        restriction.setRestricted(restrictionDTO.restricted());
+        restriction.setUser(getUserFromEmail(restrictionDTO.email()));
+        return restriction;
+    }
+
+    private UserRestriction createGenericRestrictionFromDTO(UserRestrictionDTO restrictionDTO, Poll poll){
+
+        UserRestriction restriction = new UserRestriction();
+        restriction.setPoll(poll);
+        if(restrictionDTO.branchName().isPresent()){
+            Optional<Branch> branch = branchRepository.getBranchByBranchName(restrictionDTO.branchName().get());
+            if(branch.isEmpty()){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unknown Branch name: "+restrictionDTO.branchName().get());
+            }
+            restriction.setBranchRestriction(branch.get());
+        }
+        if(restrictionDTO.male().isPresent()){
+            Sex sex = sexRepository.getSexBySexId(restrictionDTO.male().get());
+            restriction.setSexRestrictedTo(sex);
+        }
+        if(restrictionDTO.firstNamePattern().isPresent()){
+            restriction.setFirstNamePattern(restrictionDTO.firstNamePattern().get());
+        }
+        if(restrictionDTO.lastNamePattern().isPresent()){
+            restriction.setLastNamePattern(restrictionDTO.lastNamePattern().get());
+        }
+        if(restrictionDTO.olderThan().isPresent()){
+            restriction.setDateOfBirthOlder(restrictionDTO.olderThan().get());
+        }
+        if(restrictionDTO.youngerThan().isPresent()){
+            restriction.setDateOfBirthYounger(restrictionDTO.youngerThan().get());
+        }
+        return restriction;
+    }
+
+    private Poll getPollByID(UUID pollID){
+        Optional<Poll> poll = pollRepository.findById(pollID);
+        if(poll.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Poll found with ID: "+pollID);
+        }
+        return poll.get();
+    }
+
+
+    @GetMapping("/{pollID}/nominations")
+    List<Nomination> getNominations(Authentication authentication, @PathVariable UUID pollID) throws NoAuthorisationHeaderException {
+        User user = getUserFromAuthentication(authentication);
+        Poll poll = getPollByID(pollID);
+        if(!isUserAllowedToVote(poll,user) && poll.getPollCreator()!=user){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
+        }
+        return poll.getNominations();
+    }
+
+
+    Nomination createNominationFromDTO(NominationDTO nominationDTO, User nominator, Poll poll){
+        Nomination nomination = new Nomination();
+        nomination.setNominee(nominationDTO.nominee());
+        nomination.setNominator(nominator);
+        nomination.setPoll(poll);
+        return nomination;
+    }
+
+
+    @PostMapping("/{pollID}/nominations")
+    ResponseEntity<Nomination> addNomination(Authentication authentication, @PathVariable UUID pollID, @RequestBody NominationDTO nominationDTO) throws NoAuthorisationHeaderException {
+        User user = getUserFromAuthentication(authentication);
+        Poll poll = getPollByID(pollID);
+        if(!isUserAllowedToVote(poll,user) && poll.getPollCreator()!=user){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
+        }
+        if(poll.getNominationEndTime().before(Timestamp.from(Instant.now()))){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Nomination Time has ended");
+        }
+        Nomination nomination = createNominationFromDTO(nominationDTO, user, poll);
+        nominationRepository.save(nomination);
+        return ResponseEntity.created(URI.create("/"+nomination.getNominationId())).body(nomination);
+    }
+
+    private Nomination getNominationByID(Long nominationID) throws ResponseStatusException{
+        Optional<Nomination> nomination = nominationRepository.findById(nominationID);
+        if(nomination.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Nomination found with ID: "+nominationID);
+        }
+        return nomination.get();
+    }
+
+    @GetMapping("/{pollID}/nominations/{nominationID}")
+    ResponseEntity<Nomination> getNomination(Authentication authentication, @PathVariable UUID pollID, @PathVariable Long nominationID) throws NoAuthorisationHeaderException {
+        User user = getUserFromAuthentication(authentication);
+        Poll poll = getPollByID(pollID);
+        if(!isUserAllowedToVote(poll,user) && poll.getPollCreator()!=user){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
+        }
+        return ResponseEntity.ok(getNominationByID(nominationID));
+    }
+
+    @PostMapping("/{pollID}/nominations/{nominationID}/vote")
+    ResponseEntity<UserVote> vote(Authentication authentication,@PathVariable UUID pollID, @PathVariable Long nominationID) throws NoAuthorisationHeaderException {
+        User user = getUserFromAuthentication(authentication);
+        Poll poll = getPollByID(pollID);
+        Nomination nomination = getNominationByID(nominationID);
+        if(!isUserAllowedToVote(poll,user) && poll.getPollCreator()!=user){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
+        }
+        if(poll.getVoteStart().after(Timestamp.from(Instant.now()))){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Voting has not yet started");
+        }
+        if(poll.getVoteEnd().before(Timestamp.from(Instant.now()))){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Voting has ended");
+        }
+        UserVote vote = new UserVote();
+        vote.setUser(user);
+        vote.setNomination(nomination);
+        userVoteRepository.save(vote);
+        return ResponseEntity.created(URI.create("./%d".formatted(vote.getUserVote()))).body(vote);
     }
 }

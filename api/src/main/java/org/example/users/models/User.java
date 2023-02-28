@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.branches.models.Branch;
+import org.example.nominations.models.Nomination;
+import org.example.votes.models.UserVote;
 import org.example.sexes.models.Sex;
 import org.example.tokens.Token;
 import org.hibernate.annotations.UuidGenerator;
@@ -47,6 +49,14 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<UserVote> userVotes;
+
+    @OneToMany(mappedBy = "nominator", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Nomination> nominations;
 
     public Branch getBranch() {
         return branch;

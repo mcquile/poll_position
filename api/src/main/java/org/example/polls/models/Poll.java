@@ -2,6 +2,7 @@ package org.example.polls.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.example.nominations.models.Nomination;
 import org.example.restrictions.models.SpecificUserRestriction;
 import org.example.restrictions.models.UserRestriction;
 import org.example.users.models.User;
@@ -34,6 +35,10 @@ public class Poll {
   @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
   @JsonManagedReference
   private List<SpecificUserRestriction> specificUserRestrictions;
+
+  @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<Nomination> nominations;
 
 
   public UUID getPollId() {
@@ -121,5 +126,13 @@ public class Poll {
 
   public void setSpecificUserRestrictions(List<SpecificUserRestriction> specificUserRestrictions) {
     this.specificUserRestrictions = specificUserRestrictions;
+  }
+
+  public List<Nomination> getNominations() {
+    return nominations;
+  }
+
+  public void setNominations(List<Nomination> nominations) {
+    this.nominations = nominations;
   }
 }
