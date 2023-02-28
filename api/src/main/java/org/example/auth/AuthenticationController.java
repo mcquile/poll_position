@@ -1,8 +1,8 @@
 package org.example.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.example.auth.dto.AuthenticationRequest;
-import org.example.auth.dto.RegisterRequest;
+import org.example.auth.dto.LoginRequestDTO;
+import org.example.auth.dto.RegisterRequestDTO;
 import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register/")
-    public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Object> register(@RequestBody RegisterRequestDTO request) {
         try {
             return ResponseEntity.ok(service.register(request));
         } catch (UserAlreadyExistsException userAlreadyExistsException) {
@@ -36,7 +36,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login/")
-    public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<Object> authenticate(@RequestBody LoginRequestDTO request) {
         try {
             return ResponseEntity.ok(service.authenticate(request));
         } catch (InvalidLoginCredentialsException invalidLoginCredentialsException) {

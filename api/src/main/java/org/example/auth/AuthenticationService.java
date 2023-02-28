@@ -1,9 +1,9 @@
 package org.example.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.example.auth.dto.AuthenticationRequest;
-import org.example.auth.dto.AuthenticationResponse;
-import org.example.auth.dto.RegisterRequest;
+import org.example.auth.dto.LoginRequestDTO;
+import org.example.auth.dto.LoginResponseDTO;
+import org.example.auth.dto.RegisterRequestDTO;
 import org.example.config.JwtService;
 import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
@@ -30,7 +30,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
+    public LoginResponseDTO register(RegisterRequestDTO request) throws UserAlreadyExistsException {
         Optional<User> u = userRepository.findByEmail(request.getEmail());
 
         if (u.isPresent()) {
@@ -48,12 +48,12 @@ public class AuthenticationService {
         User savedUser = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
+        return LoginResponseDTO.builder()
                 .token(jwtToken)
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) throws InvalidLoginCredentialsException {
+    public LoginResponseDTO authenticate(LoginRequestDTO request) throws InvalidLoginCredentialsException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -72,7 +72,7 @@ public class AuthenticationService {
         revokeAllUserTokens(u);
         saveUserToken(u, jwtToken);
 
-        return AuthenticationResponse.builder()
+        return LoginResponseDTO.builder()
                 .token(jwtToken)
                 .build();
     }
