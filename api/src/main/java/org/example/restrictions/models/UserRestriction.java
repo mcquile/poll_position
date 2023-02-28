@@ -12,7 +12,6 @@ import java.util.Date;
 @Entity
 @Table(name = "UserRestrictions")
 public class UserRestriction {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userRestrictionId;
@@ -31,7 +30,6 @@ public class UserRestriction {
     @JsonBackReference
     private Poll poll;
 
-
     public long getUserRestrictionId() {
         return userRestrictionId;
     }
@@ -39,7 +37,6 @@ public class UserRestriction {
     public void setUserRestrictionId(long userRestrictionId) {
         this.userRestrictionId = userRestrictionId;
     }
-
 
     public String getFirstNamePattern() {
         return firstNamePattern;
@@ -49,7 +46,6 @@ public class UserRestriction {
         this.firstNamePattern = firstNamePattern;
     }
 
-
     public String getLastNamePattern() {
         return lastNamePattern;
     }
@@ -57,7 +53,6 @@ public class UserRestriction {
     public void setLastNamePattern(String lastNamePattern) {
         this.lastNamePattern = lastNamePattern;
     }
-
 
     public Sex getSexRestrictedTo() {
         return sexRestrictedTo;
@@ -67,7 +62,6 @@ public class UserRestriction {
         this.sexRestrictedTo = sexRestrictedTo;
     }
 
-
     public Branch getBranchRestriction() {
         return branchRestriction;
     }
@@ -75,7 +69,6 @@ public class UserRestriction {
     public void setBranchRestriction(Branch branchRestriction) {
         this.branchRestriction = branchRestriction;
     }
-
 
     public Date getDateOfBirthYounger() {
         return dateOfBirthYounger;
@@ -85,7 +78,6 @@ public class UserRestriction {
         this.dateOfBirthYounger = dateOfBirthYounger;
     }
 
-
     public Date getDateOfBirthOlder() {
         return dateOfBirthOlder;
     }
@@ -94,7 +86,6 @@ public class UserRestriction {
         this.dateOfBirthOlder = dateOfBirthOlder;
     }
 
-
     public Poll getPoll() {
         return poll;
     }
@@ -102,5 +93,4 @@ public class UserRestriction {
     public void setPoll(Poll poll) {
         this.poll = poll;
     }
-
 }

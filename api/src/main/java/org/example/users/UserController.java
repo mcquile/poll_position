@@ -2,7 +2,6 @@ package org.example.users;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.branches.BranchRepository;
-
 import org.example.branches.models.Branch;
 import org.example.users.dto.UserDTO;
 import org.example.users.models.User;
@@ -63,7 +62,6 @@ public class UserController {
         }
 
         user.setBranch(branch);
-
         User response = userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
@@ -85,6 +83,7 @@ public class UserController {
         user.setProfilePicLink(profilePicLink);
         User response = userRepository.save(user);
         f.delete();
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 }

@@ -35,12 +35,9 @@ import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 @SecurityRequirement(name = SECURITY_CONFIG_NAME)
 @RequestMapping("/api/v1/polls")
 public class PollController {
-
     private final PollRepository pollRepository;
     private final UserRepository userRepository;
-
     private final BranchRepository branchRepository;
-
     private final SexRepository sexRepository;
 
     public PollController(PollRepository pollRepository, UserRepository userRepository, BranchRepository branchRepository, SexRepository sexRepository) {
@@ -53,18 +50,22 @@ public class PollController {
     private boolean isUserAllowedToVote(Poll poll, User user) {
         boolean userSpecificallyBanned = false;
         boolean userSpecificallyAllowed = false;
+
         for (SpecificUserRestriction restriction : poll.getSpecificUserRestrictions()) {
             if (restriction.getUser() == user) {
                 userSpecificallyBanned = restriction.getRestricted();
                 userSpecificallyAllowed = !restriction.getRestricted();
             }
         }
+
         if (userSpecificallyAllowed) {
             return true;
         }
+
         if (userSpecificallyBanned) {
             return false;
         }
+
         for (UserRestriction restriction : poll.getUserRestrictions()) {
             if (userMatchesTemplate(user, restriction)) {
                 return true;
@@ -81,16 +82,20 @@ public class PollController {
         String lastNamePatternRestriction = template.getLastNamePattern();
         Date dateOlderRestriction = template.getDateOfBirthOlder();
         Date dateYoungerRestriction = template.getDateOfBirthYounger();
+
         matchesTemplate = branchRestriction == null || branchRestriction == user.getBranch();
         matchesTemplate = matchesTemplate && (sexRestriction == null || sexRestriction == user.getSex());
+
         if (firstNamePatternRestriction != null) {
             Pattern firstNamePattern = Pattern.compile(firstNamePatternRestriction, Pattern.CASE_INSENSITIVE);
             matchesTemplate = matchesTemplate && firstNamePattern.matcher(user.getFirstName()).matches();
         }
+
         if (lastNamePatternRestriction != null) {
             Pattern lastNamePattern = Pattern.compile(lastNamePatternRestriction, Pattern.CASE_INSENSITIVE);
             matchesTemplate = matchesTemplate && lastNamePattern.matcher(user.getFirstName()).matches();
         }
+
         matchesTemplate = matchesTemplate && (dateOlderRestriction == null || dateOlderRestriction.after(user.getDateOfBirth()));
         matchesTemplate = matchesTemplate && (dateYoungerRestriction == null || dateYoungerRestriction.before(user.getDateOfBirth()));
 

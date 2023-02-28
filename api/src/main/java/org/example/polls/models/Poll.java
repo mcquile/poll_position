@@ -13,7 +13,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "Polls")
 public class Poll {
-
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -35,7 +34,6 @@ public class Poll {
     @JsonManagedReference
     private List<SpecificUserRestriction> specificUserRestrictions;
 
-
     public UUID getPollId() {
         return pollId;
     }
@@ -43,7 +41,6 @@ public class Poll {
     public void setPollId(UUID pollId) {
         this.pollId = pollId;
     }
-
 
     public User getPollCreator() {
         return pollCreator;
@@ -53,7 +50,6 @@ public class Poll {
         this.pollCreator = pollCreator;
     }
 
-
     public String getTitle() {
         return title;
     }
@@ -61,7 +57,6 @@ public class Poll {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public String getDescription() {
         return description;
@@ -71,7 +66,6 @@ public class Poll {
         this.description = description;
     }
 
-
     public java.sql.Timestamp getVoteStart() {
         return voteStart;
     }
@@ -79,7 +73,6 @@ public class Poll {
     public void setVoteStart(java.sql.Timestamp voteStart) {
         this.voteStart = voteStart;
     }
-
 
     public java.sql.Timestamp getVoteEnd() {
         return voteEnd;
@@ -89,7 +82,6 @@ public class Poll {
         this.voteEnd = voteEnd;
     }
 
-
     public java.sql.Timestamp getNominationEndTime() {
         return nominationEndTime;
     }
@@ -97,7 +89,6 @@ public class Poll {
     public void setNominationEndTime(java.sql.Timestamp nominationEndTime) {
         this.nominationEndTime = nominationEndTime;
     }
-
 
     public java.sql.Timestamp getPollCreationTime() {
         return pollCreationTime;

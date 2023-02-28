@@ -12,7 +12,6 @@ public class Branch {
     private long branchId;
     private String branchName;
 
-
     public long getBranchId() {
         return branchId;
     }
@@ -21,7 +20,6 @@ public class Branch {
         this.branchId = branchId;
     }
 
-
     public String getBranchName() {
         return branchName;
     }
@@ -29,5 +27,4 @@ public class Branch {
     public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
-
 }

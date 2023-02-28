@@ -11,5 +11,4 @@ public record PollDTO(String title, String description,
                       Optional<List<SpecificUserRestrictionDTO>> specificUserRestrictions,
                       Optional<List<UserRestrictionDTO>> genericRestrictions, Timestamp voteStart, Timestamp voteEnd,
                       Timestamp nominationEnd) {
-
 }

@@ -9,39 +9,34 @@ import org.example.users.models.User;
 @Entity
 @Table(name = "UserVotes")
 public class UserVote {
+    @Id
+    private long userVoteId;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Nomination nomination;
 
-  @Id
-  private long userVoteId;
-  @ManyToOne
-  private User user;
-  @ManyToOne
-  private Nomination nomination;
+    public long getUserVoteId() {
+        return userVoteId;
+    }
 
+    public void setUserVoteId(long userVoteId) {
+        this.userVoteId = userVoteId;
+    }
 
-  public long getUserVoteId() {
-    return userVoteId;
-  }
+    public User getUser() {
+        return user;
+    }
 
-  public void setUserVoteId(long userVoteId) {
-    this.userVoteId = userVoteId;
-  }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public Nomination getNomination() {
+        return nomination;
+    }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-
-  public Nomination getNomination() {
-    return nomination;
-  }
-
-  public void setNomination(Nomination nomination) {
-    this.nomination = nomination;
-  }
-
+    public void setNomination(Nomination nomination) {
+        this.nomination = nomination;
+    }
 }

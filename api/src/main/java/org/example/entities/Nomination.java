@@ -11,49 +11,43 @@ import org.example.users.models.User;
 @Entity
 @Table(name = "Nominations")
 public class Nomination {
+    @Id
+    private long nominationId;
+    @ManyToOne
+    private Poll poll;
+    private String nominee;
+    @ManyToOne
+    private User nominator;
 
-  @Id
-  private long nominationId;
-  @ManyToOne
-  private Poll poll;
-  private String nominee;
-  @ManyToOne
-  private User nominator;
+    public long getNominationId() {
+        return nominationId;
+    }
 
+    public void setNominationId(long nominationId) {
+        this.nominationId = nominationId;
+    }
 
-  public long getNominationId() {
-    return nominationId;
-  }
+    public Poll getPoll() {
+        return poll;
+    }
 
-  public void setNominationId(long nominationId) {
-    this.nominationId = nominationId;
-  }
+    public void setPoll(Poll poll) {
+        this.poll = poll;
+    }
 
+    public String getNominee() {
+        return nominee;
+    }
 
-  public Poll getPoll() {
-    return poll;
-  }
+    public void setNominee(String nominee) {
+        this.nominee = nominee;
+    }
 
-  public void setPoll(Poll poll) {
-    this.poll = poll;
-  }
+    public User getNominator() {
+        return nominator;
+    }
 
-
-  public String getNominee() {
-    return nominee;
-  }
-
-  public void setNominee(String nominee) {
-    this.nominee = nominee;
-  }
-
-
-  public User getNominator() {
-    return nominator;
-  }
-
-  public void setNominator(User nominator) {
-    this.nominator = nominator;
-  }
-
+    public void setNominator(User nominator) {
+        this.nominator = nominator;
+    }
 }

@@ -37,6 +37,7 @@ public class FileUploadService {
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
         Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(credentialsFile));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
         return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
     }

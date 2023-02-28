@@ -7,6 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PollRepository extends CrudRepository<Poll, UUID> {
-
     List<Poll> findAllBy();
 }
