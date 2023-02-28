@@ -69,16 +69,21 @@ public class UserController {
     }
 
     @PostMapping(value = "/profile-pics/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException, URISyntaxException {
+    public ResponseEntity<Object> uploadImage(@RequestParam("file") MultipartFile file, Authentication authentication) throws IOException, URISyntaxException {
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).orElseThrow();
+
         FileUploadService fileUploadService = new FileUploadService();
 
         String fileName = file.getOriginalFilename();
         fileName = UUID.randomUUID().toString().concat(fileUploadService.getExtension(fileName));
 
         File f = fileUploadService.convertToFile(file, file.getOriginalFilename());
-        String response = fileUploadService.uploadFile(f, fileName);
-        f.delete();
+        String profilePicLink = fileUploadService.uploadFile(f, fileName);
 
-        return ResponseEntity.ok(response);
+        user.setProfilePicLink(profilePicLink);
+        User response = userRepository.save(user);
+        f.delete();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 }
