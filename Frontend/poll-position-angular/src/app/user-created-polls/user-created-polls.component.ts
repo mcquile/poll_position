@@ -13,7 +13,7 @@ export class UserCreatedPollsComponent implements OnInit{
   constructor(private pollService: PollService) {}
 
   getUserCreatedPolls(): void {
-    this.pollService.getUserCreatedPolls().subscribe(polls => this.polls = polls);
+    this.pollService.getAllPolls().subscribe(polls => this.polls = polls.filter(poll => this.pollService.isCreatorEmailUserEmail(poll)));
   }
 
   ngOnInit(): void {

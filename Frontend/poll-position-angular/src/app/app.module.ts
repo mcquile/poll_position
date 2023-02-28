@@ -19,4 +19,5 @@ import { AvailablePollsComponent } from './available-polls/available-polls.compo
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

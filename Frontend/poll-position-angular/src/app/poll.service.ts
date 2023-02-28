@@ -13,4 +13,16 @@ export class PollService {
   getUserCreatedPolls(): Observable<Poll[]> {
     return of(POLLS);
   }
+
+  getAvailablePolls(): Observable<Poll[]> {
+    return of(POLLS);
+  }
+
+  getAllPolls(): Observable<Poll[]> {
+    return of(POLLS);
+  }
+
+  isCreatorEmailUserEmail(poll: Poll): boolean{
+    return poll.pollCreator.email === localStorage.getItem("email");
+  }
 }

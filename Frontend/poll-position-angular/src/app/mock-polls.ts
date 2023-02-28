@@ -28,9 +28,9 @@ nominationEndTime: new Date(2023, 2, 1, 8,0,0),
 pollCreationTime: new Date(2023, 1, 28, 8,0,0),
 },
   {
-    pollID: "1",
+    pollID: "2",
     pollCreator: {
-      userID: "1",
+      userID: "2",
       firstName: "McQuile",
       lastName: "Karappen",
       branch: {
@@ -39,7 +39,7 @@ pollCreationTime: new Date(2023, 1, 28, 8,0,0),
       },
       dateOfBirth: new Date(1999, 3,9),
       profilePicLink: "www.google.com",
-      email: "mcquilekarappen@gmail.com",
+      email: "notmcquile@gmail.com",
       sex: {
         sexID: 1,
         name: "Male",
