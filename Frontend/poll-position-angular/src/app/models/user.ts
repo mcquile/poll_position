@@ -5,10 +5,10 @@ export interface User{
   userID: string;
   firstName: string;
   lastName: string;
-  branchID: Branch;
+  branch: Branch;
   dateOfBirth: Date;
   profilePicLink: string;
   email: string;
-  sexID: Sex;
+  sex: Sex;
   role: string;
 }
