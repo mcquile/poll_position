@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.restrictions.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -11,6 +11,7 @@ import org.example.users.models.User;
 public class SpecificUserRestriction {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long specificUserRestrictionID;
     @ManyToOne
     @JoinColumn(name = "PollId")

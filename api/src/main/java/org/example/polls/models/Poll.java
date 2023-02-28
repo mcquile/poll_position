@@ -2,8 +2,8 @@ package org.example.polls.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.example.entities.SpecificUserRestriction;
-import org.example.entities.UserRestriction;
+import org.example.restrictions.models.SpecificUserRestriction;
+import org.example.restrictions.models.UserRestriction;
 import org.example.users.models.User;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -28,10 +28,10 @@ public class Poll {
   private java.sql.Timestamp nominationEndTime;
   private java.sql.Timestamp pollCreationTime;
 
-  @OneToMany(mappedBy = "poll")
+  @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
   @JsonManagedReference
   private List<UserRestriction> userRestrictions;
-  @OneToMany(mappedBy = "poll")
+  @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
   @JsonManagedReference
   private List<SpecificUserRestriction> specificUserRestrictions;
 

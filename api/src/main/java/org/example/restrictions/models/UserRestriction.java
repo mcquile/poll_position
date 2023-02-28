@@ -1,15 +1,20 @@
-package org.example.entities;
+package org.example.restrictions.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.example.branches.models.Branch;
+import org.example.sexes.models.Sex;
 import org.example.polls.models.Poll;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "UserRestrictions")
 public class UserRestriction {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long userRestrictionId;
   private String firstNamePattern;
   private String lastNamePattern;
@@ -19,8 +24,8 @@ public class UserRestriction {
   @ManyToOne
   @JoinColumn(name = "branchRestriction")
   private Branch branchRestriction;
-  private java.sql.Date dateOfBirthYounger;
-  private java.sql.Date dateOfBirthOlder;
+  private Date dateOfBirthYounger;
+  private Date dateOfBirthOlder;
   @ManyToOne
   @JoinColumn(name = "PollId")
   @JsonBackReference
@@ -72,20 +77,20 @@ public class UserRestriction {
   }
 
 
-  public java.sql.Date getDateOfBirthYounger() {
+  public Date getDateOfBirthYounger() {
     return dateOfBirthYounger;
   }
 
-  public void setDateOfBirthYounger(java.sql.Date dateOfBirthYounger) {
+  public void setDateOfBirthYounger(Date dateOfBirthYounger) {
     this.dateOfBirthYounger = dateOfBirthYounger;
   }
 
 
-  public java.sql.Date getDateOfBirthOlder() {
+  public Date getDateOfBirthOlder() {
     return dateOfBirthOlder;
   }
 
-  public void setDateOfBirthOlder(java.sql.Date dateOfBirthOlder) {
+  public void setDateOfBirthOlder(Date dateOfBirthOlder) {
     this.dateOfBirthOlder = dateOfBirthOlder;
   }
 
