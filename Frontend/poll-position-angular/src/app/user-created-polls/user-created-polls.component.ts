@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Poll} from "../models/poll";
 
 @Component({
   selector: 'app-user-created-polls',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-created-polls.component.css']
 })
 export class UserCreatedPollsComponent {
-
+  polls: Poll[] = [];
 }
