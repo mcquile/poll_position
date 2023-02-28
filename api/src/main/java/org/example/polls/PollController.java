@@ -3,15 +3,15 @@ package org.example.polls;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.branches.BranchRepository;
 import org.example.branches.models.Branch;
-import org.example.sexes.SexRepository;
-import org.example.sexes.models.Sex;
-import org.example.restrictions.models.SpecificUserRestriction;
-import org.example.restrictions.models.UserRestriction;
 import org.example.exceptions.NoAuthorisationHeaderException;
 import org.example.polls.models.Poll;
 import org.example.polls.models.dto.PollDTO;
+import org.example.restrictions.models.SpecificUserRestriction;
+import org.example.restrictions.models.UserRestriction;
 import org.example.restrictions.models.dto.SpecificUserRestrictionDTO;
 import org.example.restrictions.models.dto.UserRestrictionDTO;
+import org.example.sexes.SexRepository;
+import org.example.sexes.models.Sex;
 import org.example.users.UserRepository;
 import org.example.users.models.User;
 import org.springframework.http.HttpStatus;
@@ -50,30 +50,30 @@ public class PollController {
         this.sexRepository = sexRepository;
     }
 
-    private boolean isUserAllowedToVote(Poll poll, User user){
+    private boolean isUserAllowedToVote(Poll poll, User user) {
         boolean userSpecificallyBanned = false;
         boolean userSpecificallyAllowed = false;
-        for(SpecificUserRestriction restriction : poll.getSpecificUserRestrictions()){
-            if(restriction.getUser()==user){
+        for (SpecificUserRestriction restriction : poll.getSpecificUserRestrictions()) {
+            if (restriction.getUser() == user) {
                 userSpecificallyBanned = restriction.getRestricted();
                 userSpecificallyAllowed = !restriction.getRestricted();
             }
         }
-        if(userSpecificallyAllowed){
+        if (userSpecificallyAllowed) {
             return true;
         }
-        if(userSpecificallyBanned){
+        if (userSpecificallyBanned) {
             return false;
         }
-        for(UserRestriction restriction: poll.getUserRestrictions()){
-            if(userMatchesTemplate(user,restriction)){
+        for (UserRestriction restriction : poll.getUserRestrictions()) {
+            if (userMatchesTemplate(user, restriction)) {
                 return true;
             }
         }
         return poll.getUserRestrictions().isEmpty() && poll.getSpecificUserRestrictions().isEmpty();
     }
 
-    private boolean userMatchesTemplate(User user, UserRestriction template){
+    private boolean userMatchesTemplate(User user, UserRestriction template) {
         boolean matchesTemplate;
         Branch branchRestriction = template.getBranchRestriction();
         Sex sexRestriction = template.getSexRestrictedTo();
@@ -83,15 +83,15 @@ public class PollController {
         Date dateYoungerRestriction = template.getDateOfBirthYounger();
         matchesTemplate = branchRestriction == null || branchRestriction == user.getBranch();
         matchesTemplate = matchesTemplate && (sexRestriction == null || sexRestriction == user.getSex());
-        if(firstNamePatternRestriction != null){
-            Pattern firstNamePattern = Pattern.compile(firstNamePatternRestriction,Pattern.CASE_INSENSITIVE);
+        if (firstNamePatternRestriction != null) {
+            Pattern firstNamePattern = Pattern.compile(firstNamePatternRestriction, Pattern.CASE_INSENSITIVE);
             matchesTemplate = matchesTemplate && firstNamePattern.matcher(user.getFirstName()).matches();
         }
-        if(lastNamePatternRestriction != null){
-            Pattern lastNamePattern = Pattern.compile(lastNamePatternRestriction,Pattern.CASE_INSENSITIVE);
+        if (lastNamePatternRestriction != null) {
+            Pattern lastNamePattern = Pattern.compile(lastNamePatternRestriction, Pattern.CASE_INSENSITIVE);
             matchesTemplate = matchesTemplate && lastNamePattern.matcher(user.getFirstName()).matches();
         }
-        matchesTemplate = matchesTemplate && ( dateOlderRestriction == null ||dateOlderRestriction.after(user.getDateOfBirth()));
+        matchesTemplate = matchesTemplate && (dateOlderRestriction == null || dateOlderRestriction.after(user.getDateOfBirth()));
         matchesTemplate = matchesTemplate && (dateYoungerRestriction == null || dateYoungerRestriction.before(user.getDateOfBirth()));
 
         return matchesTemplate;
@@ -99,17 +99,17 @@ public class PollController {
 
     private User getUserFromAuthentication(Authentication authentication) throws NoAuthorisationHeaderException {
         String email = authentication.getName();
-        try{
+        try {
             return getUserFromEmail(email);
-        }catch (ResponseStatusException e){
+        } catch (ResponseStatusException e) {
             throw new NoAuthorisationHeaderException();
         }
     }
 
-    private User getUserFromEmail(String email) throws ResponseStatusException{
+    private User getUserFromEmail(String email) throws ResponseStatusException {
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No User with email: "+email);
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No User with email: " + email);
         }
         return user.get();
     }
@@ -118,12 +118,12 @@ public class PollController {
     ResponseEntity<Stream<Poll>> getAllPolls(Authentication authentication) throws NoAuthorisationHeaderException {
         User user = getUserFromAuthentication(authentication);
         Stream<Poll> allPolls = pollRepository.findAllBy().stream();
-        Stream<Poll> allowedPolls = allPolls.filter(poll -> isUserAllowedToVote(poll,user) || poll.getPollCreator()==user);
+        Stream<Poll> allowedPolls = allPolls.filter(poll -> isUserAllowedToVote(poll, user) || poll.getPollCreator() == user);
         return ResponseEntity.status(HttpStatus.OK).body(allowedPolls);
     }
 
     @PostMapping
-    void addPoll(Authentication authentication,@RequestBody PollDTO pollDTO) throws NoAuthorisationHeaderException {
+    void addPoll(Authentication authentication, @RequestBody PollDTO pollDTO) throws NoAuthorisationHeaderException {
         User user = getUserFromAuthentication(authentication);
         Poll poll = new Poll();
         poll.setPollCreator(user);
@@ -133,9 +133,10 @@ public class PollController {
         poll.setVoteEnd(pollDTO.voteEnd());
         poll.setVoteStart(pollDTO.voteStart());
         poll.setNominationEndTime(pollDTO.nominationEnd());
-        if(pollDTO.specificUserRestrictions().isPresent()){
+
+        if (pollDTO.specificUserRestrictions().isPresent()) {
             List<SpecificUserRestriction> restrictions = new ArrayList<>();
-            for(SpecificUserRestrictionDTO restrictionDTO : pollDTO.specificUserRestrictions().get()){
+            for (SpecificUserRestrictionDTO restrictionDTO : pollDTO.specificUserRestrictions().get()) {
                 SpecificUserRestriction restriction = new SpecificUserRestriction();
                 restriction.setPoll(poll);
                 restriction.setRestricted(restrictionDTO.restricted());
@@ -144,32 +145,32 @@ public class PollController {
             }
             poll.setSpecificUserRestrictions(restrictions);
         }
-        if(pollDTO.genericRestrictions().isPresent()) {
+        if (pollDTO.genericRestrictions().isPresent()) {
             List<UserRestriction> restrictions = new ArrayList<>();
             for (UserRestrictionDTO restrictionDTO : pollDTO.genericRestrictions().get()) {
                 UserRestriction restriction = new UserRestriction();
                 restriction.setPoll(poll);
-                if(restrictionDTO.branchName().isPresent()){
-                    Optional<Branch> branch = branchRepository.getBranchByBranchName(restrictionDTO.branchName().get());
-                    if(branch.isEmpty()){
-                        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unknown Branch name: "+restrictionDTO.branchName().get());
+                if (restrictionDTO.branchName().isPresent()) {
+                    Optional<Branch> branch = branchRepository.findBranchByBranchNameEqualsIgnoreCase(restrictionDTO.branchName().get());
+                    if (branch.isEmpty()) {
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown Branch name: " + restrictionDTO.branchName().get());
                     }
                     restriction.setBranchRestriction(branch.get());
                 }
-                if(restrictionDTO.male().isPresent()){
+                if (restrictionDTO.male().isPresent()) {
                     Sex sex = sexRepository.getSexBySexId(restrictionDTO.male().get());
                     restriction.setSexRestrictedTo(sex);
                 }
-                if(restrictionDTO.firstNamePattern().isPresent()){
+                if (restrictionDTO.firstNamePattern().isPresent()) {
                     restriction.setFirstNamePattern(restrictionDTO.firstNamePattern().get());
                 }
-                if(restrictionDTO.lastNamePattern().isPresent()){
+                if (restrictionDTO.lastNamePattern().isPresent()) {
                     restriction.setLastNamePattern(restrictionDTO.lastNamePattern().get());
                 }
-                if(restrictionDTO.olderThan().isPresent()){
+                if (restrictionDTO.olderThan().isPresent()) {
                     restriction.setDateOfBirthOlder(restrictionDTO.olderThan().get());
                 }
-                if(restrictionDTO.youngerThan().isPresent()){
+                if (restrictionDTO.youngerThan().isPresent()) {
                     restriction.setDateOfBirthYounger(restrictionDTO.youngerThan().get());
                 }
                 restrictions.add(restriction);

@@ -8,26 +8,26 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Branches")
 public class Branch {
-  @Id
-  private long branchId;
-  private String branchName;
+    @Id
+    private long branchId;
+    private String branchName;
 
 
-  public long getBranchId() {
-    return branchId;
-  }
+    public long getBranchId() {
+        return branchId;
+    }
 
-  public void setBranchId(long branchId) {
-    this.branchId = branchId;
-  }
+    public void setBranchId(long branchId) {
+        this.branchId = branchId;
+    }
 
 
-  public String getBranchName() {
-    return branchName;
-  }
+    public String getBranchName() {
+        return branchName;
+    }
 
-  public void setBranchName(String branchName) {
-    this.branchName = branchName;
-  }
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
 
 }
