@@ -1,6 +1,9 @@
 package org.example.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.example.auth.dto.AuthenticationRequest;
+import org.example.auth.dto.AuthenticationResponse;
+import org.example.auth.dto.RegisterRequest;
 import org.example.config.JwtService;
 import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
