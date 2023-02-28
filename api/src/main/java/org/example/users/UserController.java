@@ -3,6 +3,8 @@ package org.example.users;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.branches.BranchRepository;
 import org.example.branches.models.Branch;
+import org.example.sexes.SexRepository;
+import org.example.sexes.models.Sex;
 import org.example.users.dto.UserDTO;
 import org.example.users.models.User;
 import org.springframework.http.HttpStatus;
@@ -27,10 +29,12 @@ import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 public class UserController {
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
+    private final SexRepository sexRepository;
 
-    public UserController(UserRepository userRepository, BranchRepository branchRepository) {
+    public UserController(UserRepository userRepository, BranchRepository branchRepository, SexRepository sexRepository) {
         this.userRepository = userRepository;
         this.branchRepository = branchRepository;
+        this.sexRepository = sexRepository;
     }
 
     @GetMapping
@@ -50,9 +54,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such user");
         }
 
-        user.setEmail(userDTO.emailAddress());
-        user.setFirstName(userDTO.firstName());
-        user.setLastName(userDTO.lastName());
+        if (userDTO.firstName() != null) {
+            user.setFirstName(userDTO.firstName());
+        }
+        if (userDTO.lastName() != null) {
+            user.setLastName(userDTO.lastName());
+        }
+        if (userDTO.emailAddress() != null) {
+            user.setEmail(userDTO.emailAddress());
+        }
 
         Branch branch;
         try {
@@ -60,8 +70,16 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such branch");
         }
-
         user.setBranch(branch);
+
+        Sex sex;
+        try {
+            sex = sexRepository.findSexByNameEqualsIgnoreCase(userDTO.sex()).orElseThrow();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such sex");
+        }
+        user.setSex(sex);
+
         User response = userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
