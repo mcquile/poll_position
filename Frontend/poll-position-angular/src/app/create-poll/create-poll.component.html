@@ -1,1 +1,16 @@
-<p>create-poll works!</p>
+<h2>Create Poll</h2>
+<form [formGroup]="createPollForm">
+  <label for="title">Title</label>
+  <input id = "title" type="text" formControlName = "title">
+
+  <label for="description">Description</label>
+  <input id = "description" type="text" formControlName = "description">
+
+  <label for="startTime">Start Time</label>
+  <input id="startTime" type="datetime-local" formControlName = "startTime"/>
+
+  <label for="endTime">End Time</label>
+  <input id="endTime" type="datetime-local" formControlName = "endTime"/>
+
+  <button type="button" (click)="createPoll()">Create</button>
+</form>

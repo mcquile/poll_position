@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserCreatedPollsComponent } from './user-created-polls/user-created-polls.component';
 import { AvailablePollsComponent } from './available-polls/available-polls.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -15,9 +16,10 @@ import { CreatePollComponent } from './create-poll/create-poll.component';
     AvailablePollsComponent,
     CreatePollComponent
   ],
-  imports: [
-    BrowserModule
-  ],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
