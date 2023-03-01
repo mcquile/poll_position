@@ -101,7 +101,9 @@ public class PollService {
             pollCreator.put("email",poll.getPollCreator().getEmail());
             pollResponse.put("creator",pollCreator);
         }
-        pollResponse.put("nominations",poll.getNominations().stream().map(NominationService::convertNominationIntoJSONResponse));
+        if(poll.getNominations()!=null){
+            pollResponse.put("nominations",poll.getNominations().stream().map(NominationService::convertNominationIntoJSONResponse));
+        }
         return pollResponse;
     }
 
