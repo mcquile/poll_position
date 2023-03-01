@@ -40,7 +40,7 @@ export const NOMINATIONS: Nomination[] = [
   },
   {
     nominationID: 7,
-    poll: POLLS[0],
+    poll: POLLS[1],
     nominee: "Example Nominee 3",
     nominator: POLLS[0].pollCreator
   },

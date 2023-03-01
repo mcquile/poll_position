@@ -4,7 +4,7 @@ import {NominationsService} from "../../services/nominations.service";
 import {ActivatedRoute} from "@angular/router";
 import {Poll} from "../../models/poll";
 import {PollService} from "../../services/poll.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-voting-page',
@@ -23,7 +23,7 @@ export class VotingPageComponent implements OnInit{
     private route: ActivatedRoute,
     private formBuilder: FormBuilder) {
     this.votingForm = this.formBuilder.group({
-      nominations: ['']
+      nominations: new FormControl('')
     })
   }
 
