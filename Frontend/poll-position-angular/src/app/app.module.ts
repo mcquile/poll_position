@@ -7,6 +7,7 @@ import { UserCreatedPollsComponent } from './user-created-polls/user-created-pol
 import { AvailablePollsComponent } from './available-polls/available-polls.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
     imports: [
         BrowserModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AppRoutingModule
     ],
   providers: [],
   bootstrap: [AppComponent]
