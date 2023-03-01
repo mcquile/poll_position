@@ -25,6 +25,15 @@ export class CreatePollComponent {
     ])
   });
 
+  restrictionsForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    sex: new FormControl(''),
+    branch: new FormControl(''),
+    dateOfBirthMinimum: new FormGroup(''),
+    dateOfBirthMaximum: new FormGroup('')
+  })
+
   createPoll(): void {
     console.log(this.createPollForm.value);
   }

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Poll} from "../models/poll";
 import {PollService} from "../poll.service";
 import {Router} from "@angular/router";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-user-created-polls',
@@ -24,6 +23,6 @@ export class UserCreatedPollsComponent implements OnInit{
   }
 
   navigateToCreatePoll():void {
-      this.router.navigateByUrl('/create-poll');
+      this.router.navigateByUrl('create-poll');
   }
 }
