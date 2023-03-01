@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { VotingPageComponent } from './voting-page/voting-page.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { VotingPageComponent } from './voting-page/voting-page.component';
       FormsModule,
       BrowserModule,
       SocialLoginModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+      HttpClientModule,
     ],
   providers:  [
     CookieService,
