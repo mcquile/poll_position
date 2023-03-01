@@ -3,12 +3,14 @@ package org.example.auth;
 import lombok.RequiredArgsConstructor;
 import org.example.auth.dto.LoginRequestDTO;
 import org.example.auth.dto.RegisterRequestDTO;
-import org.example.auth.dto.SocialAuthRequestDTO;
 import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200/")
 public class AuthenticationController {
     private final AuthenticationService service;
 
@@ -43,10 +44,5 @@ public class AuthenticationController {
                     .status(HttpStatus.NOT_FOUND)
                     .body("Invalid login credentials");
         }
-    }
-
-    @PostMapping("/register/oauth2/")
-    public ResponseEntity<Object> registerSocialAccount(@RequestBody SocialAuthRequestDTO socialAuthRequestDTO) {
-        return ResponseEntity.ok(socialAuthRequestDTO);
     }
 }
