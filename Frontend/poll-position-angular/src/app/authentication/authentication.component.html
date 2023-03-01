@@ -1,0 +1,39 @@
+<section>
+
+  <article id="login">
+    <form #loginForm="ngForm" (ngSubmit)="handleUserLogin(loginForm)">
+      <h1>Log in</h1>
+      <label for="emailAddress">Email</label>
+      <input id="emailAddress" name="email" ngModel placeholder="Email Address" type="email">
+      <br>
+      <label for="password">Password</label>
+      <input id="password" name="password" ngModel placeholder="Create a password" type="password">
+      <br>
+      <button type="submit">Login</button>
+    </form>
+  </article>
+
+  <article id="sign-up">
+    <form #regForm="ngForm" (ngSubmit)="handleUserRegistration(regForm)">
+      <h1>Create an account</h1>
+      <label for="emailAddressRg">Email</label>
+      <input id="emailAddressRg" name="reg_email" ngModel placeholder="Email Address" type="email">
+      <br>
+      <label for="firstname">First name</label>
+      <input id="firstname" name="firstname" ngModel placeholder="First name" type="text">
+      <br>
+      <label for="lastName">Last name</label>
+      <input id="lastName" name="lastname" ngModel placeholder="Last name" type="text">
+      <br>
+      <label for="passwordRg">Password</label>
+      <input id="passwordRg" name="reg_password" ngModel placeholder="Create a password" type="password">
+      <br>
+      <button type="submit">Sign up</button>
+    </form>
+  </article>
+  <article>
+    <h1>or</h1>
+    <asl-google-signin-button size="large" text="continue_with" theme="filled_black" type="standard" width="30">
+    </asl-google-signin-button>
+  </article>
+</section>
