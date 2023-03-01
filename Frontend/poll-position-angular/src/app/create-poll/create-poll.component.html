@@ -1,0 +1,55 @@
+<h2>Create Poll</h2>
+
+<h3>Details</h3>
+<form [formGroup]="createPollForm">
+  <label for="title">Title</label>
+  <input id = "title" type="text" formControlName = "title">
+
+  <label for="description">Description</label>
+  <input id = "description" type="text" formControlName = "description">
+
+  <label for="startTime">Start Time</label>
+  <input id="startTime" type="datetime-local" formControlName = "startTime"/>
+
+  <label for="endTime">End Time</label>
+  <input id="endTime" type="datetime-local" formControlName = "endTime"/>
+</form>
+
+<h3>Nominees</h3>
+<form [formGroup]="nomineeForm">
+  <div formArrayName="nominees">
+    <div
+      *ngFor="let nomineeGroup of nominees?.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <h3>Nominee - {{i + 1}}</h3>
+      <input type="text" formControlName="nominee" placeholder="Enter Nominee" />
+    </div>
+  </div>
+  <button (click)="addNominee()">Add Nominee</button>
+</form>
+
+<h3>Restrictions</h3>
+<form [formGroup]="restrictionsForm">
+  <label for="firstName">First Name</label>
+  <input id = "firstName" type="text" formControlName = "firstName">
+
+  <label for="lastName">Last Name</label>
+  <input id = "lastName" type="text" formControlName = "lastName">
+
+  <label for="sex">Select a sex to restrict to:</label>
+  <select id="sex" formControlName = "sex">
+    <option value="">Neither</option>
+    <option value="true">Male</option>
+    <option value="false">female</option>
+  </select>
+
+  <label for="dateOfBirthOlderThan">Date Of Birth Older Than</label>
+  <input id="dateOfBirthOlderThan" type="datetime-local" formControlName = "dateOfBirthOlderThan"/>
+
+  <label for="dateOfBirthYoungerThan">Date Of Birth Younger Than</label>
+  <input id="dateOfBirthYoungerThan" type="datetime-local" formControlName = "dateOfBirthYoungerThan"/>
+</form>
+
+<button type="button" (click)="createPoll()">Create</button>
+

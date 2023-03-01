@@ -1,0 +1,8 @@
+<section>
+  <ul>
+    <li *ngFor = "let poll of polls">
+      {{poll.title}}
+    </li>
+  </ul>
+</section>
+<button type="button" (click)="navigateToCreatePoll()">+</button>
