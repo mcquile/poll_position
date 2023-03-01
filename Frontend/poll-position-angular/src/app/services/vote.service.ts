@@ -16,7 +16,7 @@ export class VoteService {
     return of(USERVOTES.filter(userVote => userVote.nomination.poll.pollID === pollID));
   }
 
-  getPollResultsByPollID(pollID: string, nominations: Nomination[]): VoteResults[]{
+  getPollResultsByPollID(pollID: string, nominations: Nomination[]): Observable<VoteResults[]>{
     this.getVotesByPollID(pollID).subscribe(userVotes => this.userVotes = userVotes);
     let voteResults: VoteResults[] = [];
     nominations.forEach( nomination => {
@@ -31,6 +31,6 @@ export class VoteService {
         totalVotes: count
       })
     })
-    return voteResults;
+    return of(voteResults);
   }
 }
