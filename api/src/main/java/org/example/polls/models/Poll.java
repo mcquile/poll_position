@@ -19,7 +19,7 @@ public class Poll {
   @GeneratedValue
   @UuidGenerator
   private UUID pollId;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "pollCreator")
   private User pollCreator;
   private String title;
