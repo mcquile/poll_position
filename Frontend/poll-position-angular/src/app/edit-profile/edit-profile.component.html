@@ -1,0 +1,27 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+  <label for="first-name">First Name: </label>
+  <input id="first-name" type="text" formControlName="firstName">
+
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+
+  <label for="branch">Branch: </label>
+  <input id="branch" type="text" formControlName="branch">
+
+  <label for="dateOfBirth">Date of Birth: </label>
+  <input id="dateOfBirth" type="date" formControlName="dateOfBirth">
+
+  <label for="sex">Sex: </label>
+  <input id="sex" type="text" formControlName="sex">
+
+  <label for="email">Email: </label>
+  <input id="email" type="email" formControlName="email">
+
+  <label for="password">Password: </label>
+  <input id="password" type="password" formControlName="password">
+</form>
+<p>Complete the form to enable button.</p>
+<button type="submit" [disabled]="!profileForm.valid">Submit</button>
+<button type="button" (click)="updateProfile()">Update Profile</button>
+<p>Form Status: {{ profileForm.status }}</p>
