@@ -51,6 +51,13 @@ public class UserController {
         this.tokenRepository = tokenRepository;
     }
 
+    @GetMapping("/me/")
+    public ResponseEntity<Object> getLoggedInUser(Authentication authentication) {
+        String email = authentication.getName();
+        User users = userRepository.findByEmail(email).get();
+        return ResponseEntity.status(HttpStatus.OK).body(users);
+    }
+
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -83,7 +90,7 @@ public class UserController {
                 .body(LoginResponseDTO.builder().token(socialAuthRequestDTO.getToken()).build());
     }
 
-    @PutMapping
+    @PutMapping("/me/")
     public ResponseEntity<Object> editUserProfile(UserDTO userDTO, Authentication authentication) {
         String userEmail = authentication.getName();
 
