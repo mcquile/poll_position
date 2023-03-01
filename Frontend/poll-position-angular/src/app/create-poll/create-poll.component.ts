@@ -30,8 +30,8 @@ export class CreatePollComponent {
     lastName: new FormControl(''),
     sex: new FormControl(''),
     branch: new FormControl(''),
-    dateOfBirthMinimum: new FormGroup(''),
-    dateOfBirthMaximum: new FormGroup('')
+    dateOfBirthOlderThan: new FormGroup(''),
+    dateOfBirthYoungerThan: new FormGroup('')
   })
 
   createPoll(): void {
