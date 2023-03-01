@@ -58,6 +58,9 @@ export class AuthenticationComponent implements OnInit {
       profilePic: user.photoUrl,
     };
 
-    axios.post(endpoint, data).then((response) => console.log(response));
+    axios.post(endpoint, data).then((response) => {
+      localStorage.setItem('userToken', response.data.token);
+      window.location.href = '/';
+    });
   }
 }
