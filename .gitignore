@@ -153,8 +153,6 @@ buildNumber.properties
 **/build/
 !src/**/build/
 
-*.iml
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -179,3 +177,4 @@ gradle-app.setting
 application.properties
 
 credentials.json
+froentend/

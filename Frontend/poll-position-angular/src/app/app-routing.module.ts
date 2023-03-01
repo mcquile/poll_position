@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
-import {RouterModule, Routes} from "@angular/router";
-import {DashboardComponent} from "./dashboard/dashboard.component";
-import {CreatePollComponent} from "./create-poll/create-poll.component";
+import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreatePollComponent } from './create-poll/create-poll.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'create-poll', component: CreatePollComponent},
-]
+  { path: '', component: AuthenticationComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'create-poll', component: CreatePollComponent },
+];
 
 @NgModule({
   declarations: [],
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
