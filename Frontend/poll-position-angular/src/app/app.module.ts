@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { VotingPageComponent } from './components/voting-page/voting-page.component';
 import { PollResultComponent } from './components/poll-result/poll-result.component';
+import { CompletedPollsComponent } from './components/completed-polls/completed-polls.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PollResultComponent } from './components/poll-result/poll-result.compon
     AvailablePollsComponent,
     CreatePollComponent,
     VotingPageComponent,
-    PollResultComponent
+    PollResultComponent,
+    CompletedPollsComponent
   ],
     imports: [
       AppRoutingModule,
