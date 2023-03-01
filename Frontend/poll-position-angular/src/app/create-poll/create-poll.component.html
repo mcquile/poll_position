@@ -14,3 +14,16 @@
 
   <button type="button" (click)="createPoll()">Create</button>
 </form>
+
+<form [formGroup]="nomineeForm">
+  <div formArrayName="nominees">
+    <div
+      *ngFor="let nomineeGroup of nominees?.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <h3>Nominee - {{i + 1}}</h3>
+      <input type="text" formControlName="nominee" placeholder="Enter Nominee" />
+    </div>
+  </div>
+  <button (click)="addNominee()">Add Nominee</button>
+</form>

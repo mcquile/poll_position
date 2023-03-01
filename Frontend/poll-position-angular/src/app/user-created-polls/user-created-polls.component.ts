@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Poll} from "../models/poll";
 import {PollService} from "../poll.service";
 import {Router} from "@angular/router";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-user-created-polls',
@@ -10,8 +11,13 @@ import {Router} from "@angular/router";
 })
 export class UserCreatedPollsComponent implements OnInit{
   polls: Poll[] = [];
+  constructor(private pollService: PollService,
+              private router: Router,
+              ) {}
 
-  constructor(private pollService: PollService, private router: Router) {}
+  ngOnInit(): void {
+    this.getUserCreatedPolls();
+  }
 
   getUserCreatedPolls(): void {
     this.pollService.getAllPolls().subscribe(polls => this.polls = polls.filter(poll => this.pollService.isCreatorEmailUserEmail(poll)));
@@ -19,9 +25,5 @@ export class UserCreatedPollsComponent implements OnInit{
 
   navigateToCreatePoll():void {
       this.router.navigateByUrl('/create-poll');
-  }
-
-  ngOnInit(): void {
-    this.getUserCreatedPolls();
   }
 }
