@@ -15,19 +15,19 @@ import java.util.UUID;
 @Table(name = "Polls")
 public class Poll {
 
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    private UUID pollId;
-    @ManyToOne
-    @JoinColumn(name = "pollCreator")
-    private User pollCreator;
-    private String title;
-    private String description;
-    private java.sql.Timestamp voteStart;
-    private java.sql.Timestamp voteEnd;
-    private java.sql.Timestamp nominationEndTime;
-    private java.sql.Timestamp pollCreationTime;
+  @Id
+  @GeneratedValue
+  @UuidGenerator
+  private UUID pollId;
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "pollCreator")
+  private User pollCreator;
+  private String title;
+  private String description;
+  private java.sql.Timestamp voteStart;
+  private java.sql.Timestamp voteEnd;
+  private java.sql.Timestamp nominationEndTime;
+  private java.sql.Timestamp pollCreationTime;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
     @JsonManagedReference
