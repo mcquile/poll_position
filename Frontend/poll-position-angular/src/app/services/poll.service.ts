@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
-import {Poll} from "./models/poll";
-import {POLLS} from "./mock-polls";
+import {Poll} from "../models/poll";
+import {POLLS} from "../mock-data/mock-polls";
 
 @Injectable({
   providedIn: 'root'

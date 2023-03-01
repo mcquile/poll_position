@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Nomination} from "../models/nomination";
-import {NominationsService} from "../nominations.service";
+import {Nomination} from "../../models/nomination";
+import {NominationsService} from "../../services/nominations.service";
 import {ActivatedRoute} from "@angular/router";
-import {Poll} from "../models/poll";
-import {PollService} from "../poll.service";
+import {Poll} from "../../models/poll";
+import {PollService} from "../../services/poll.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -36,6 +36,8 @@ export class VotingPageComponent implements OnInit{
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
     this.pollService.getSpecificPoll(pollID).subscribe(poll => this.poll = poll);
   }
+
+  submitVotingForm():void{}
 
   ngOnInit(): void {
     this.getNominations();

@@ -3,6 +3,7 @@ import {User} from "./user";
 
 export interface Nomination{
   nominationID: number;
+  poll: Poll;
   nominee: string;
-  votes: number[];
+  nominator: User;
 }

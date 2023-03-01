@@ -2,7 +2,7 @@ import {User} from "./user";
 import {Nomination} from "./nomination";
 
 export interface UserVote{
-  userVote: number;
-  userID: User;
+  userVoteID: number;
+  user: User;
   nominationID: Nomination;
 }

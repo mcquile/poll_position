@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { AppSettings } from '../appSettings';
+import { AppSettings } from '../../appSettings';
 import axios from 'axios';
 import { NgForm } from '@angular/forms';
 
