@@ -44,7 +44,9 @@ export class VotingPageComponent implements OnInit {
   }
 
   submitVotingForm(): void {
-    this.votingService.voteForPoll(this.poll!, this.votingForm.value as Nomination)
+    console.log(this.poll);
+    console.log(this.votingForm.value.nominations)
+    this.votingService.voteForPoll(this.poll!, this.votingForm.value.nominations as Nomination)
   }
 
   ngOnInit(): void {

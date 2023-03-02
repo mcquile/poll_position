@@ -3,15 +3,15 @@
   <h3>{{poll.description}}</h3>
   <div *ngIf="nominations">
     <form (ngSubmit)="submitVotingForm()" [formGroup]="votingForm">
-      <label *ngFor="let nomination of nominations;">
+      <section *ngFor="let nomination of nominations">
+        <label for="nomination{{nomination.id}}}">{{nomination.nominee}}</label>
         <input
-          [value]="nomination.nominationID"
+          [value]="nomination"
           formControlName="nominations"
-          name="nomination"
+          name="nominations"
           type="radio"
         />
-        {{nomination.nominee}}
-      </label>
+      </section>
       <button>submit</button>
     </form>
   </div>
