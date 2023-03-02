@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Poll} from "../models/poll";
-import {PollService} from "../poll.service";
+import {Poll} from "../../models/poll";
+import {PollService} from "../../services/poll.service";
 
 @Component({
   selector: 'app-available-polls',
