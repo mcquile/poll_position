@@ -12,7 +12,7 @@ export class PollService {
   constructor(private http:HttpClient) { }
 
   getPolls(): Observable<Poll[]>{
-    return this.http.get<Poll[]>("localhost:8080/api/v1/polls",{
+    return this.http.get<Poll[]>("http://localhost:8080/api/v1/polls",{
       headers:{
         "Authorization": "Bearer " + (localStorage.getItem("userToken") || "")
       }
@@ -20,7 +20,7 @@ export class PollService {
   }
 
   createPoll(request: object): Observable<Poll>{
-    return this.http.post<Poll>("localhost:8080/api/v1/polls",request,{
+    return this.http.post<Poll>("http://localhost:8080/api/v1/polls",request,{
       headers:{
         "Authorization": "Bearer " + (localStorage.getItem("userToken") || "")
       }
