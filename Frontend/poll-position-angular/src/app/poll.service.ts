@@ -40,10 +40,11 @@ export class PollService {
   }
 
   getSpecificPoll(pollID: string): Observable<Poll>{
-    return of(POLLS.filter(poll => poll.pollID === pollID)[0])
+    return of(POLLS.filter(poll => poll.id === pollID)[0])
   }
 
   isCreatorEmailUserEmail(poll: Poll): boolean{
-    return poll.pollCreator.email === localStorage.getItem("email");
+    return true;
+    return poll.creator.email === localStorage.getItem("email");
   }
 }

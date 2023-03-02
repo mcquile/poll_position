@@ -38,10 +38,10 @@ export class CreatePollComponent {
       genericRestrictions: this.restrictionsForm.value.restrictions
     }
     console.log(request);
-    this.router.navigateByUrl(`view-poll/${'demo'}`)
     this.pollService.createPoll(request).subscribe(poll => {
+      console.log("hello")
       console.log(poll);
-      this.router.navigateByUrl(`view-poll/${poll.pollID}`);
+      this.router.navigateByUrl(`view-poll/${poll.id}`);
     });
 
   }

@@ -27,6 +27,6 @@ export class UserCreatedPollsComponent implements OnInit{
   }
 
   navigateToSpecificPoll(poll: Poll): void{
-    this.router.navigateByUrl(`view-poll/${poll.pollID}`)
+    this.router.navigateByUrl(`view-poll/${poll.id}`)
   }
 }

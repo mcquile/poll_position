@@ -12,7 +12,6 @@ export class AppComponent implements OnInit{
 
   //TODO: REMOVE EMAIL MOCK AFTER CONNECTION TO API!
   ngOnInit(): void {
-    localStorage.setItem("email", "mcquilekarappen@gmail.com");
   }
 
 }

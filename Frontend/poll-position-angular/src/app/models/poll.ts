@@ -1,8 +1,8 @@
 import {User} from "./user";
 
 export interface Poll{
-  pollID: string;
-  pollCreator: User;
+  id: string;
+  creator: User;
   title: string;
   description: string;
   voteStart: Date;

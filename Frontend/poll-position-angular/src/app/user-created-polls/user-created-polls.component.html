@@ -1,7 +1,7 @@
 <section>
   <ul *ngIf="polls.length !== 0">
     <li *ngFor = "let poll of polls">
-      <button type="button">{{poll.title}}</button>
+      <button type="button" (click)="navigateToSpecificPoll(poll)">{{poll.title}}</button>
     </li>
   </ul>
   <p *ngIf="polls.length===0">No Polls At the moment</p>
