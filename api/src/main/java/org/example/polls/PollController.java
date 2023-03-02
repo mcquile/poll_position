@@ -24,7 +24,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
@@ -32,6 +33,7 @@ import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 @RestController
 @SecurityRequirement(name = SECURITY_CONFIG_NAME)
 @RequestMapping("/api/v1/polls")
+@CrossOrigin
 public class PollController {
 
     private final PollRepository pollRepository;
@@ -51,28 +53,29 @@ public class PollController {
         this.nominationRepository = nominationRepository;
         this.userVoteRepository = userVoteRepository;
     }
+
     @GetMapping
     ResponseEntity<Object> getAllPolls(Authentication authentication) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
         Stream<Poll> allPolls = pollRepository.findAllBy().stream();
-        Stream<Poll> allowedPolls = allPolls.filter(poll -> PollService.isUserAllowedToVote(poll,user) || poll.getPollCreator()==user);
-        Stream<Map<String,Object>>response = allowedPolls.map(PollService::convertPollIntoJSONResponse);
+        Stream<Poll> allowedPolls = allPolls.filter(poll -> PollService.isUserAllowedToVote(poll, user) || poll.getPollCreator() == user);
+        Stream<Map<String, Object>> response = allowedPolls.map(PollService::convertPollIntoJSONResponse);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    ResponseEntity<Object> addPoll(Authentication authentication,@RequestBody PollDTO pollDTO) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
+    ResponseEntity<Object> addPoll(Authentication authentication, @RequestBody PollDTO pollDTO) throws NoAuthorisationHeaderException {
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
         Poll poll = PollService.convertFromDTO(pollDTO, user, userRepository, branchRepository, sexRepository);
         pollRepository.save(poll);
-        return ResponseEntity.created(URI.create("./"+poll.getPollId())).body(PollService.convertPollIntoJSONResponse(poll));
+        return ResponseEntity.created(URI.create("./" + poll.getPollId())).body(PollService.convertPollIntoJSONResponse(poll));
     }
 
     @GetMapping("/{pollID}")
     ResponseEntity<Object> getPoll(Authentication authentication, @PathVariable UUID pollID) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
-        if(!PollService.isUserAllowedToVote(poll,user) && poll.getPollCreator()!=user){
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
+        if (!PollService.isUserAllowedToVote(poll, user) && poll.getPollCreator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
         }
         return ResponseEntity.ok(PollService.convertPollIntoJSONResponse(poll));
@@ -80,8 +83,8 @@ public class PollController {
 
     @GetMapping("/{pollID}/nominations")
     ResponseEntity<Object> getNominations(Authentication authentication, @PathVariable UUID pollID) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
         if (!PollService.isUserAllowedToVote(poll, user) && poll.getPollCreator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
         }
@@ -89,11 +92,10 @@ public class PollController {
     }
 
 
-
     @PostMapping("/{pollID}/nominations")
     ResponseEntity<Nomination> addNomination(Authentication authentication, @PathVariable UUID pollID, @RequestBody NominationDTO nominationDTO) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
         if (!PollService.isUserAllowedToVote(poll, user) && poll.getPollCreator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
         }
@@ -107,19 +109,19 @@ public class PollController {
 
     @GetMapping("/{pollID}/nominations/{nominationID}")
     ResponseEntity<Nomination> getNomination(Authentication authentication, @PathVariable UUID pollID, @PathVariable Long nominationID) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
         if (!PollService.isUserAllowedToVote(poll, user) && poll.getPollCreator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
         }
-        return ResponseEntity.ok(NominationService.getNominationByID(nominationID,nominationRepository));
+        return ResponseEntity.ok(NominationService.getNominationByID(nominationID, nominationRepository));
     }
 
     @PostMapping("/{pollID}/nominations/{nominationID}/vote")
     ResponseEntity<UserVote> vote(Authentication authentication, @PathVariable UUID pollID, @PathVariable Long nominationID) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
-        Nomination nomination = NominationService.getNominationByID(nominationID,nominationRepository);
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
+        Nomination nomination = NominationService.getNominationByID(nominationID, nominationRepository);
         if (!PollService.isUserAllowedToVote(poll, user) && poll.getPollCreator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed Access to Poll");
         }
@@ -138,9 +140,9 @@ public class PollController {
 
     @DeleteMapping("/{pollID}")
     ResponseEntity<Object> deletePoll(Authentication authentication, @PathVariable UUID pollID) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
-        if(poll.getPollCreator() != user){
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
+        if (poll.getPollCreator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot Delete someone else's poll");
         }
         pollRepository.delete(poll);
@@ -149,10 +151,10 @@ public class PollController {
 
     @DeleteMapping("/{pollID}/nominations/{nominationID}")
     ResponseEntity<Object> deleteNomination(Authentication authentication, @PathVariable UUID pollID, @PathVariable Long nominationID) throws NoAuthorisationHeaderException {
-        User user = UserService.getUserFromAuthentication(authentication,userRepository);
-        Poll poll = PollService.getPollByID(pollID,pollRepository);
-        Nomination nomination = NominationService.getNominationByID(nominationID,nominationRepository);
-        if(poll.getPollCreator() != user && nomination.getNominator() != user){
+        User user = UserService.getUserFromAuthentication(authentication, userRepository);
+        Poll poll = PollService.getPollByID(pollID, pollRepository);
+        Nomination nomination = NominationService.getNominationByID(nominationID, nominationRepository);
+        if (poll.getPollCreator() != user && nomination.getNominator() != user) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot Delete someone else's nomination");
         }
         nominationRepository.delete(nomination);
