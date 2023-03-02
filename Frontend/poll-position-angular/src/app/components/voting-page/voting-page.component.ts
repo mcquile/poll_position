@@ -30,7 +30,10 @@ export class VotingPageComponent implements OnInit {
 
   getNominations(): void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
-    // this.nominationService.getNominationsForPoll(pollID).subscribe(nominations => this.nominations = nominations)
+    this.nominationService.getNominationsForPoll(pollID).subscribe(nominations => {
+      this.nominations = nominations
+      console.log(this.nominations);
+    })
   }
 
   getPoll(): void {

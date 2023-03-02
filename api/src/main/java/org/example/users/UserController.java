@@ -26,7 +26,7 @@ import static org.example.config.SecurityConfiguration.SECURITY_CONFIG_NAME;
 @RestController
 @SecurityRequirement(name = SECURITY_CONFIG_NAME)
 @RequestMapping(value = "/api/v1/users")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin
 public class UserController {
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
