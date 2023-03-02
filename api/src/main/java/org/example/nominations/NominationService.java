@@ -22,7 +22,9 @@ public class NominationService {
         Map<String,Object> nominationResponse = new HashMap<>();
         nominationResponse.put("id",nomination.getNominationId());
         nominationResponse.put("nominee",nomination.getNominee());
-        nominationResponse.put("votes",nomination.getVotes().stream().map(VoteService::convertVoteIntoJSONResponse));
+        if(nomination.getVotes()!=null){
+            nominationResponse.put("votes",nomination.getVotes().stream().map(VoteService::convertVoteIntoJSONResponse));
+        }
         return nominationResponse;
     }
 
