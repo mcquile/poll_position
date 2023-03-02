@@ -40,9 +40,10 @@ export class CreatePollComponent implements OnInit {
     let request = {
       title: this.createPollForm.value.title,
       description: this.createPollForm.value.description,
-      voteStartTime: this.createPollForm.value.startTime,
-      voteEndTime: this.createPollForm.value.endTime,
-      nominees: this.nomineeForm.value.nominees,
+      voteStart: this.createPollForm.value.startTime,
+      voteEnd: this.createPollForm.value.endTime,
+      nominationEnd: this.createPollForm.value.nominationEndTime,
+      nominations: this.nomineeForm.value.nominees,
       genericRestrictions: this.restrictionsForm.value.restrictions
     }
     console.log(request);

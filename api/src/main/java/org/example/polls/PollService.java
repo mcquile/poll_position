@@ -54,6 +54,7 @@ public class PollService {
                 Nomination nomination = new Nomination();
                 nomination.setNominee(nominationDTO.nominee());
                 nomination.setNominator(user);
+                nomination.setPoll(poll);
                 return nomination;
             }).toList());
         }
