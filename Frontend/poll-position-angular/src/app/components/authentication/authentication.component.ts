@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { AppSettings } from '../../appSettings';
+import {Component, OnInit} from '@angular/core';
+import {SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
+import {AppSettings} from '../../appSettings';
 import axios from 'axios';
-import { NgForm } from '@angular/forms';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./authentication.component.css'],
 })
 export class AuthenticationComponent implements OnInit {
-  constructor(private authService: SocialAuthService) {}
+  constructor(private authService: SocialAuthService) {
+  }
 
   ngOnInit(): void {
     AppSettings.handleUserAuthenticated('/dashboard/');

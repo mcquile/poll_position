@@ -8,11 +8,13 @@ import {Router} from "@angular/router";
   templateUrl: './user-created-polls.component.html',
   styleUrls: ['./user-created-polls.component.css']
 })
-export class UserCreatedPollsComponent implements OnInit{
+export class UserCreatedPollsComponent implements OnInit {
   polls: Poll[] = [];
+
   constructor(private pollService: PollService,
               private router: Router,
-              ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getUserCreatedPolls();
@@ -22,11 +24,11 @@ export class UserCreatedPollsComponent implements OnInit{
     this.pollService.getPolls().subscribe(polls => this.polls = polls.filter(poll => this.pollService.isCreatorEmailUserEmail(poll)));
   }
 
-  navigateToCreatePoll():void {
-      this.router.navigateByUrl('create-poll');
+  navigateToCreatePoll(): void {
+    this.router.navigateByUrl('create-poll');
   }
 
-  navigateToSpecificPoll(poll: Poll): void{
-    this.router.navigateByUrl(`view-poll/${poll.pollID}`)
+  navigateToSpecificPoll(poll: Poll): void {
+    this.router.navigateByUrl(`view-poll/${poll.id}`)
   }
 }

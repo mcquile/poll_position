@@ -5,13 +5,14 @@ import {ActivatedRoute} from "@angular/router";
 import {Poll} from "../../models/poll";
 import {PollService} from "../../services/poll.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {AppSettings} from "../../appSettings";
 
 @Component({
   selector: 'app-voting-page',
   templateUrl: './voting-page.component.html',
   styleUrls: ['./voting-page.component.css']
 })
-export class VotingPageComponent implements OnInit{
+export class VotingPageComponent implements OnInit {
   votingForm: FormGroup;
 
   nominations: Nomination[] = [];
@@ -27,18 +28,20 @@ export class VotingPageComponent implements OnInit{
     })
   }
 
-  getNominations():void {
+  getNominations(): void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
-    this.nominationService.getNominationsForPoll(pollID).subscribe(nominations => this.nominations = nominations)
+    // this.nominationService.getNominationsForPoll(pollID).subscribe(nominations => this.nominations = nominations)
   }
 
-  getPoll():void {
+  getPoll(): void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
   }
 
-  submitVotingForm():void{}
+  submitVotingForm(): void {
+  }
 
   ngOnInit(): void {
+    AppSettings.handleUserNotAuthenticated();
     this.getNominations();
     this.getPoll();
   }

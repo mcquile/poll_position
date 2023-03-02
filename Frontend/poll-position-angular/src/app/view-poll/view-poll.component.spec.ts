@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ViewPollComponent } from './view-poll.component';
+import {ViewPollComponent} from './view-poll.component';
 
 describe('ViewPollComponent', () => {
   let component: ViewPollComponent;
@@ -8,9 +8,9 @@ describe('ViewPollComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewPollComponent ]
+      declarations: [ViewPollComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ViewPollComponent);
     component = fixture.componentInstance;

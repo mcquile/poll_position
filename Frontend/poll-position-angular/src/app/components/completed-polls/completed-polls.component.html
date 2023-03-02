@@ -1,7 +1,7 @@
 <section>
   <ul>
-    <li *ngFor = "let poll of polls">
-      <a routerLink="/results/{{poll.pollID}}">
+    <li *ngFor="let poll of polls">
+      <a routerLink="/results/{{poll.id}}">
         {{poll.title}}
       </a>
     </li>

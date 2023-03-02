@@ -13,6 +13,7 @@ export class AvailablePollsComponent implements OnInit{
   constructor(private pollService: PollService) {}
 
   getAvailablePolls(): void {
+    this.pollService.getPolls().subscribe(polls => this.polls = polls.filter(poll => !this.pollService.isCreatorEmailUserEmail(poll)));
   }
 
   ngOnInit(): void {

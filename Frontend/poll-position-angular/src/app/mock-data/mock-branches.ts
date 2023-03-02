@@ -1,6 +1,6 @@
 import {Branch} from "../models/branch";
 
-export const BRANCHES: Branch[] =[
+export const BRANCHES: Branch[] = [
   {
     branchID: 1,
     branchName: "Johannesburg"

@@ -3,7 +3,7 @@
   <h3>{{poll.description}}</h3>
 
   <ol>
-    <li *ngFor = "let voteResult of voteResults">
+    <li *ngFor="let voteResult of voteResults">
       {{voteResult.nomination.nominee}}: {{voteResult.totalVotes}} votes
     </li>
   </ol>

@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {USERS} from "./mock-data/mock-users";
-import {User} from "./models/user";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +12,6 @@ export class AppComponent implements OnInit{
 
   //TODO: REMOVE EMAIL MOCK AFTER CONNECTION TO API!
   ngOnInit(): void {
-    localStorage.setItem("currentUser", JSON.stringify(USERS[0]));
   }
 
 }

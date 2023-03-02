@@ -7,13 +7,15 @@ import {Poll} from "../../models/poll";
   templateUrl: './completed-polls.component.html',
   styleUrls: ['./completed-polls.component.css']
 })
-export class CompletedPollsComponent implements OnInit{
+export class CompletedPollsComponent implements OnInit {
   polls: Poll[] = [];
+
   constructor(private pollService: PollService) {
   }
 
   getCompletedPolls(): void {
   }
+
   ngOnInit(): void {
     this.getCompletedPolls()
   }

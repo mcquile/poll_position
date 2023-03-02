@@ -1,6 +1,11 @@
 <h2>Poll details</h2>
 <section>
-  <p >Title:</p>
-  <p>Description:</p>
-  <p></p>
+  <p >Title: {{poll.title}}</p>
+  <p >Description: {{poll.description}}</p>
+  <section >
+    <h3>Vote for Nominees</h3>
+    <div *ngFor="let nomination of nominations">
+      <p>{{nomination.nominee}}</p>
+    </div>
+  </section>
 </section>

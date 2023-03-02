@@ -2,13 +2,13 @@
   <h2>{{poll.title}}</h2>
   <h3>{{poll.description}}</h3>
 
-  <form [formGroup]="votingForm" (ngSubmit)="submitVotingForm()">
+  <form (ngSubmit)="submitVotingForm()" [formGroup]="votingForm">
     <label *ngFor="let nomination of nominations;">
       <input
-        formControlName="nominations"
-        type="radio"
-        name="nomination"
         [value]="nomination.nominationID"
+        formControlName="nominations"
+        name="nomination"
+        type="radio"
       />
       {{nomination.nominee}}
     </label>

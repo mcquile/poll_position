@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserCreatedPollsComponent } from './user-created-polls.component';
+import {UserCreatedPollsComponent} from './user-created-polls.component';
 
 describe('UserCreatedPollsComponent', () => {
   let component: UserCreatedPollsComponent;
@@ -8,9 +8,9 @@ describe('UserCreatedPollsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserCreatedPollsComponent ]
+      declarations: [UserCreatedPollsComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(UserCreatedPollsComponent);
     component = fixture.componentInstance;

@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {PollService} from "../../services/poll.service";
 import {Router} from "@angular/router";
+import {AppSettings} from "../../appSettings";
 
 @Component({
   selector: 'app-create-poll',
   templateUrl: './create-poll.component.html',
   styleUrls: ['./create-poll.component.css']
 })
-export class CreatePollComponent {
+export class CreatePollComponent implements OnInit {
 
-  constructor(private pollService: PollService, private router: Router) {
-  }
   createPollForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
@@ -19,14 +18,23 @@ export class CreatePollComponent {
     startTime: new FormControl(''),
     endTime: new FormControl(''),
   });
-
   nomineeForm = new FormGroup({
     nominees: new FormArray([]),
   });
-
   restrictionsForm = new FormGroup({
     restrictions: new FormArray([]),
   })
+
+  constructor(private pollService: PollService, private router: Router) {
+  }
+
+  get restrictions(): FormArray {
+    return this.restrictionsForm.get('restrictions') as FormArray;
+  }
+
+  get nominees(): FormArray {
+    return this.nomineeForm.get('nominees') as FormArray;
+  }
 
   createPoll(): void {
     let request = {
@@ -38,18 +46,19 @@ export class CreatePollComponent {
       genericRestrictions: this.restrictionsForm.value.restrictions
     }
     console.log(request);
-    this.router.navigateByUrl(`view-poll/${'demo'}`)
     this.pollService.createPoll(request).subscribe(poll => {
+      console.log("hello")
       console.log(poll);
-      this.router.navigateByUrl(`view-poll/${poll.pollID}`);
+      this.router.navigateByUrl(`view-poll/${poll.id}`);
     });
 
   }
 
-  removeRestriction(){
-    this.restrictions.removeAt(this.restrictions.length-1);
+  removeRestriction() {
+    this.restrictions.removeAt(this.restrictions.length - 1);
   }
-  addRestriction(){
+
+  addRestriction() {
     this.restrictions.push(
       new FormGroup({
         firstName: new FormControl(''),
@@ -62,14 +71,6 @@ export class CreatePollComponent {
     );
   }
 
-  get restrictions(): FormArray {
-    return this.restrictionsForm.get('restrictions') as FormArray;
-  }
-
-  get nominees(): FormArray {
-    return this.nomineeForm.get('nominees') as FormArray;
-  }
-
   addNominee() {
     this.nominees.push(
       new FormGroup({
@@ -79,6 +80,10 @@ export class CreatePollComponent {
   }
 
   removeNominee() {
-    this.nominees.removeAt(this.nominees.length-1);
+    this.nominees.removeAt(this.nominees.length - 1);
+  }
+
+  ngOnInit(): void {
+    AppSettings.handleUserNotAuthenticated();
   }
 }

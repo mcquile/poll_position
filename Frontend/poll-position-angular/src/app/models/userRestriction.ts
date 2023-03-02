@@ -2,7 +2,7 @@ import {Sex} from "./sex";
 import {Branch} from "./branch";
 import {Poll} from "./poll";
 
-export interface UserRestriction{
+export interface UserRestriction {
   userRestrictionID: number;
   firstNamePattern: string;
   lastNamePattern: string;
