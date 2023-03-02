@@ -34,7 +34,6 @@ export class VotingPageComponent implements OnInit{
 
   getPoll():void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
-    this.pollService.getSpecificPoll(pollID).subscribe(poll => this.poll = poll);
   }
 
   submitVotingForm():void{}

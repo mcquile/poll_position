@@ -37,7 +37,6 @@ export class PollResultComponent implements OnInit{
 
   getPoll():void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
-    this.pollService.getSpecificPoll(pollID).subscribe(poll => this.poll = poll);
   }
 
   ngOnInit(): void {

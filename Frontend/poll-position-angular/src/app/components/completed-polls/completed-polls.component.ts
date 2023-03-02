@@ -13,7 +13,6 @@ export class CompletedPollsComponent implements OnInit{
   }
 
   getCompletedPolls(): void {
-    this.pollService.getAllPolls().subscribe(polls => this.polls = polls.filter(poll => poll.voteEnd < new Date()));
   }
   ngOnInit(): void {
     this.getCompletedPolls()
