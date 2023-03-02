@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {UserVote} from "../models/userVote";
 import {Nomination} from "../models/nomination";
+import {Poll} from "../models/poll";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,7 @@ import {Nomination} from "../models/nomination";
 export class VoteService {
   userVotes: UserVote[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   getVotesByPollID(pollID: string)/*: Observable<UserVote[]> */ {
@@ -31,5 +33,13 @@ export class VoteService {
     //   })
     // })
     // return of(voteResults);
+  }
+
+  voteForPoll(poll: Poll,nomination: Nomination){
+    return this.http.post<Poll>(`http://localhost:8080/api/v1/polls/${poll.id}/nominations/${nomination.nominationID}/vote`, {
+      headers: {
+        "Authorization": "Bearer " + (localStorage.getItem("userToken") || "")
+      }
+    });
   }
 }
