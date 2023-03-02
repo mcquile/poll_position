@@ -6,6 +6,7 @@ import {Poll} from "../../models/poll";
 import {PollService} from "../../services/poll.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {AppSettings} from "../../appSettings";
+import {VoteService} from "../../services/vote.service";
 
 @Component({
   selector: 'app-voting-page',
@@ -22,7 +23,8 @@ export class VotingPageComponent implements OnInit {
     private nominationService: NominationsService,
     private pollService: PollService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private votingService: VoteService) {
     this.votingForm = this.formBuilder.group({
       nominations: new FormControl('')
     })
@@ -38,9 +40,11 @@ export class VotingPageComponent implements OnInit {
 
   getPoll(): void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
+    this.pollService.getPollByID(pollID).subscribe(poll => this.poll = poll);
   }
 
   submitVotingForm(): void {
+    this.votingService.voteForPoll(this.poll!, this.votingForm.value as Nomination)
   }
 
   ngOnInit(): void {

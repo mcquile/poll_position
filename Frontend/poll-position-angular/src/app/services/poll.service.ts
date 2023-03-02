@@ -27,6 +27,14 @@ export class PollService {
     });
   }
 
+  getPollByID(pollID:string): Observable<Poll>{
+    return this.http.get<Poll>(`http://localhost:8080/api/v1/polls/${pollID}`, {
+      headers: {
+        "Authorization": "Bearer " + (localStorage.getItem("userToken") || "")
+      }
+    })
+  }
+
 
   isCreatorEmailUserEmail(poll: Poll): boolean {
     return poll.creator.email === localStorage.getItem("email");
