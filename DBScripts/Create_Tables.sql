@@ -1,3 +1,9 @@
+USE master
+GO
+
+CREATE DATABASE PollPositionDB
+GO
+
 USE PollPositionDB;
 GO
 
@@ -72,3 +78,13 @@ CREATE TABLE [SpecificUserRestrictions](
 	[UserID] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users NOT NULL,
 	[Restricted] bit NOT NULL
 );
+
+CREATE TABLE [dbo].[Token]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [expired] [bit] NOT NULL,
+    [revoked] [bit] NOT NULL,
+    [token] [varchar](MAX) NULL,
+    [tokenType] [varchar](255) NULL,
+    [user_id] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [Users] NULL,
+)
