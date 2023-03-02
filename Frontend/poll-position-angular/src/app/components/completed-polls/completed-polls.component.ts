@@ -1,10 +1,22 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PollService} from "../../services/poll.service";
+import {Poll} from "../../models/poll";
 
 @Component({
   selector: 'app-completed-polls',
   templateUrl: './completed-polls.component.html',
   styleUrls: ['./completed-polls.component.css']
 })
-export class CompletedPollsComponent {
+export class CompletedPollsComponent implements OnInit{
+  polls: Poll[] = [];
+  constructor(private pollService: PollService) {
+  }
+
+  getCompletedPolls(): void {
+    this.pollService.getAllPolls().subscribe(polls => this.polls = polls.filter(poll => poll.voteEnd < new Date()));
+  }
+  ngOnInit(): void {
+    this.getCompletedPolls()
+  }
 
 }

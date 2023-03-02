@@ -32,6 +32,7 @@ export class PollResultComponent implements OnInit{
   getVoteResults():void {
     const pollID = this.route.snapshot.paramMap.get("pollID") as string;
     this.voteService.getPollResultsByPollID(pollID, this.nominations).subscribe(pollResults => this.voteResults = pollResults);
+    this.voteResults.sort((a, b) => (a.totalVotes > b.totalVotes) ? -1 : 1)
   }
 
   getPoll():void {

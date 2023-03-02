@@ -4,12 +4,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CreatePollComponent } from './components/create-poll/create-poll.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import {VotingPageComponent} from "./components/voting-page/voting-page.component";
+import {PollResultComponent} from "./components/poll-result/poll-result.component";
 
 const routes: Routes = [
-  { path: '', component: AuthenticationComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'create-poll', component: CreatePollComponent },
-  { path: 'vote/:pollID', component: VotingPageComponent }
+  { path: 'vote/:pollID', component: VotingPageComponent },
+  { path: 'results/:pollID', component: PollResultComponent }
 ];
 
 @NgModule({

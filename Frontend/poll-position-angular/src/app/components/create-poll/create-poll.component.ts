@@ -36,6 +36,8 @@ export class CreatePollComponent {
 
   createPoll(): void {
     console.log(this.createPollForm.value);
+    console.log(this.restrictionsForm.value);
+    console.log(this.nomineeForm.value)
   }
 
 
