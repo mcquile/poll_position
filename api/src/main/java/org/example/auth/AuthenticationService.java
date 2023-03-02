@@ -1,5 +1,6 @@
 package org.example.auth;
 
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.example.auth.dto.LoginRequestDTO;
 import org.example.auth.dto.LoginResponseDTO;
@@ -31,7 +32,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public LoginResponseDTO register(RegisterRequestDTO request) throws UserAlreadyExistsException {
+    public LoginResponseDTO register(RegisterRequestDTO request, @Nullable String profilePic) throws UserAlreadyExistsException {
         Optional<User> u = userRepository.findByEmail(request.getEmail());
 
         if (u.isPresent()) {
@@ -42,6 +43,7 @@ public class AuthenticationService {
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
+                .profilePicLink(profilePic)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
@@ -78,34 +80,24 @@ public class AuthenticationService {
                 .build();
     }
 
-    public LoginResponseDTO oauth2Login(SocialAuthRequestDTO socialAuthRequestDTO) {
+    public LoginResponseDTO oauth2Login(SocialAuthRequestDTO socialAuthRequestDTO) throws InvalidLoginCredentialsException, UserAlreadyExistsException {
         Optional<User> u = userRepository.findByEmail(socialAuthRequestDTO.getEmailAddress());
+
         if (u.isPresent()) {
-            revokeAllUserTokens(u.get());
-            saveUserToken(u.get(), socialAuthRequestDTO.getToken());
-            User savedUser = userRepository.save(u.get());
-            String jwtToken = jwtService.generateToken(u.get());
-            saveUserToken(savedUser, jwtToken);
-            return LoginResponseDTO.builder()
-                    .token(jwtToken)
+            LoginRequestDTO requestDTO = LoginRequestDTO.builder()
+                    .email(socialAuthRequestDTO.getEmailAddress())
+                    .password("mIWxzaCt&0YSZqq2n^4g$ZEav#19dw2!W66HPV&s3ta2qkvjLZ")
                     .build();
+            return authenticate(requestDTO);
         }
 
-        User user = User.builder()
-                .firstName(socialAuthRequestDTO.getFirstname())
-                .lastName(socialAuthRequestDTO.getLastname())
+        RegisterRequestDTO registerRequestDTO = RegisterRequestDTO.builder()
                 .email(socialAuthRequestDTO.getEmailAddress())
+                .firstname(socialAuthRequestDTO.getFirstname())
+                .lastname(socialAuthRequestDTO.getLastname())
                 .password("mIWxzaCt&0YSZqq2n^4g$ZEav#19dw2!W66HPV&s3ta2qkvjLZ")
-                .profilePicLink(socialAuthRequestDTO.getProfilePic())
                 .build();
-
-        userRepository.save(user);
-        saveUserToken(user, socialAuthRequestDTO.getToken());
-        String jwtToken = jwtService.generateToken(user);
-
-        return LoginResponseDTO.builder()
-                .token(jwtToken)
-                .build();
+        return register(registerRequestDTO, socialAuthRequestDTO.getProfilePic());
     }
 
     private void saveUserToken(User user, String jwtToken) {
