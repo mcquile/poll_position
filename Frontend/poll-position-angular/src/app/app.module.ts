@@ -5,16 +5,18 @@ import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-s
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { AppComponent } from './app.component';
-import {AuthenticationComponent} from './authentication/authentication.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserCreatedPollsComponent } from './user-created-polls/user-created-polls.component';
-import { AvailablePollsComponent } from './available-polls/available-polls.component';
-import { CreatePollComponent } from './create-poll/create-poll.component';
+import {AuthenticationComponent} from './components/authentication/authentication.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UserCreatedPollsComponent } from './components/user-created-polls/user-created-polls.component';
+import { AvailablePollsComponent } from './components/available-polls/available-polls.component';
+import { CreatePollComponent } from './components/create-poll/create-poll.component';
 import {ReactiveFormsModule,FormsModule} from "@angular/forms";
 import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
-import { VotingPageComponent } from './voting-page/voting-page.component';
+import { VotingPageComponent } from './components/voting-page/voting-page.component';
+import { PollResultComponent } from './components/poll-result/poll-result.component';
+import { CompletedPollsComponent } from './components/completed-polls/completed-polls.component';
 import {HttpClientModule} from "@angular/common/http";
 import { ViewPollComponent } from './view-poll/view-poll.component';
 
@@ -27,6 +29,9 @@ import { ViewPollComponent } from './view-poll/view-poll.component';
     AvailablePollsComponent,
     CreatePollComponent,
     VotingPageComponent,
+    PollResultComponent,
+    CompletedPollsComponent,
+    VotingPageComponent,
     ViewPollComponent
   ],
     imports: [
@@ -34,8 +39,7 @@ import { ViewPollComponent } from './view-poll/view-poll.component';
       FormsModule,
       BrowserModule,
       SocialLoginModule,
-        ReactiveFormsModule,
-      HttpClientModule,
+        ReactiveFormsModule
     ],
   providers:  [
     CookieService,

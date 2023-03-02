@@ -1,0 +1,9 @@
+<section>
+  <ul>
+    <li *ngFor = "let poll of polls">
+      <a routerLink="/vote/{{poll.pollID}}">
+        {{poll.title}}
+      </a>
+    </li>
+  </ul>
+</section>

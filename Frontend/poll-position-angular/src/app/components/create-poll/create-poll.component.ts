@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {PollService} from "../poll.service";
+import {PollService} from "../../services/poll.service";
 import {Router} from "@angular/router";
 
 @Component({

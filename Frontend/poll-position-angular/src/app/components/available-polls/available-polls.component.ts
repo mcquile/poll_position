@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Poll} from "../models/poll";
-import {PollService} from "../poll.service";
+import {Poll} from "../../models/poll";
+import {PollService} from "../../services/poll.service";
 
 @Component({
   selector: 'app-available-polls',
@@ -13,7 +13,6 @@ export class AvailablePollsComponent implements OnInit{
   constructor(private pollService: PollService) {}
 
   getAvailablePolls(): void {
-    this.pollService.getAllPolls().subscribe(polls => this.polls = polls.filter(poll => !this.pollService.isCreatorEmailUserEmail(poll)));
   }
 
   ngOnInit(): void {
