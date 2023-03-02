@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-view-poll',
@@ -9,11 +7,4 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ViewPollComponent {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
-
-  }
-
-  ngOnInit(): void {
-
-  }
 }
