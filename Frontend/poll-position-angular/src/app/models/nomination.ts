@@ -1,6 +1,6 @@
 
 export interface Nomination{
-  nominationID: number;
+  id: number;
   nominee: string;
   votes: any[];
 }

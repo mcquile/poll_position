@@ -36,10 +36,11 @@ export class VoteService {
   }
 
   voteForPoll(poll: Poll,nomination: Nomination){
-    return this.http.post<Poll>(`http://localhost:8080/api/v1/polls/${poll.id}/nominations/${nomination.nominationID}/vote`, {
+    console.log(nomination);
+    return this.http.post(`http://localhost:8080/api/v1/polls/${poll.id}/nominations/${nomination.id}/vote`,{}, {
       headers: {
         "Authorization": "Bearer " + (localStorage.getItem("userToken") || "")
       }
-    });
+    }).subscribe(complete => console.log(complete));
   }
 }
