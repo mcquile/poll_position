@@ -5,7 +5,6 @@ import org.example.branches.BranchRepository;
 import org.example.branches.models.Branch;
 import org.example.sexes.SexRepository;
 import org.example.sexes.models.Sex;
-import org.example.tokens.TokenRepository;
 import org.example.users.dto.UserDTO;
 import org.example.users.models.User;
 import org.springframework.http.HttpStatus;
@@ -32,18 +31,15 @@ public class UserController {
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
     private final SexRepository sexRepository;
-    private final TokenRepository tokenRepository;
 
     public UserController(
             UserRepository userRepository,
             BranchRepository branchRepository,
-            SexRepository sexRepository,
-            TokenRepository tokenRepository
+            SexRepository sexRepository
     ) {
         this.userRepository = userRepository;
         this.branchRepository = branchRepository;
         this.sexRepository = sexRepository;
-        this.tokenRepository = tokenRepository;
     }
 
     @GetMapping("/me/")
