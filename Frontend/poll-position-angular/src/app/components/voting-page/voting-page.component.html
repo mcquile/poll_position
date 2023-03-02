@@ -1,0 +1,19 @@
+<div *ngIf="poll">
+  <h2>{{poll.title}}</h2>
+  <h3>{{poll.description}}</h3>
+
+  <form (ngSubmit)="submitVotingForm()" [formGroup]="votingForm">
+    <label *ngFor="let nomination of nominations;">
+      <input
+        [value]="nomination.nominationID"
+        formControlName="nominations"
+        name="nomination"
+        type="radio"
+      />
+      {{nomination.nominee}}
+    </label>
+    <button>submit</button>
+  </form>
+</div>
+
+

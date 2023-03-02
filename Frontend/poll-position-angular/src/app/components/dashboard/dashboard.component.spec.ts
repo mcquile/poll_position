@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ViewPollComponent} from './view-poll.component';
+import {DashboardComponent} from './dashboard.component';
 
-describe('ViewPollComponent', () => {
-  let component: ViewPollComponent;
-  let fixture: ComponentFixture<ViewPollComponent>;
+describe('DashboardComponent', () => {
+  let component: DashboardComponent;
+  let fixture: ComponentFixture<DashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ViewPollComponent]
+      declarations: [DashboardComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ViewPollComponent);
+    fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

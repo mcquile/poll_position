@@ -1,22 +1,23 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@abacritt/angularx-social-login';
 
-import { AppComponent } from './app.component';
-import {AuthenticationComponent} from './authentication/authentication.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserCreatedPollsComponent } from './user-created-polls/user-created-polls.component';
-import { AvailablePollsComponent } from './available-polls/available-polls.component';
-import { CreatePollComponent } from './create-poll/create-poll.component';
-import {ReactiveFormsModule,FormsModule} from "@angular/forms";
-import { CookieService } from 'ngx-cookie-service';
+import {AppComponent} from './app.component';
+import {AuthenticationComponent} from './components/authentication/authentication.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {UserCreatedPollsComponent} from './components/user-created-polls/user-created-polls.component';
+import {AvailablePollsComponent} from './components/available-polls/available-polls.component';
+import {CreatePollComponent} from './components/create-poll/create-poll.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CookieService} from 'ngx-cookie-service';
 
-import { AppRoutingModule } from './app-routing.module';
-import { VotingPageComponent } from './voting-page/voting-page.component';
+import {AppRoutingModule} from './app-routing.module';
+import {VotingPageComponent} from './components/voting-page/voting-page.component';
+import {PollResultComponent} from './components/poll-result/poll-result.component';
+import {CompletedPollsComponent} from './components/completed-polls/completed-polls.component';
 import {HttpClientModule} from "@angular/common/http";
-import { ViewPollComponent } from './view-poll/view-poll.component';
+import {ViewPollComponent} from './view-poll/view-poll.component';
 
 @NgModule({
   declarations: [
@@ -27,17 +28,20 @@ import { ViewPollComponent } from './view-poll/view-poll.component';
     AvailablePollsComponent,
     CreatePollComponent,
     VotingPageComponent,
+    PollResultComponent,
+    CompletedPollsComponent,
+    VotingPageComponent,
     ViewPollComponent
   ],
-    imports: [
-      AppRoutingModule,
-      FormsModule,
-      BrowserModule,
-      SocialLoginModule,
-        ReactiveFormsModule,
-      HttpClientModule,
-    ],
-  providers:  [
+  imports: [
+    AppRoutingModule,
+    FormsModule,
+    BrowserModule,
+    SocialLoginModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
+  providers: [
     CookieService,
     {
       provide: 'SocialAuthServiceConfig',

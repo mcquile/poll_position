@@ -1,0 +1,67 @@
+<h2>Create Poll</h2>
+
+<h3>Poll Details</h3>
+<form [formGroup]="createPollForm">
+  <label for="title">Title</label>
+  <input formControlName="title" id="title" required type="text">
+
+  <label for="description">Description</label>
+  <input formControlName="description" id="description" type="text">
+
+  <label for="startTime">Voting Opening Time</label>
+  <input formControlName="startTime" id="startTime" required type="datetime-local"/>
+
+  <label for="endTime">Voting Cutoff Time</label>
+  <input formControlName="endTime" id="endTime" required type="datetime-local"/>
+
+  <label for="nominationEndTime">Nomination Cutoff Time</label>
+  <input formControlName="nominationEndTime" id="nominationEndTime" required type="datetime-local"/>
+</form>
+
+<h3>Nominees</h3>
+<form [formGroup]="nomineeForm">
+  <section formArrayName="nominees">
+    <div
+      *ngFor="let nomineeGroup of nominees?.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <h3>Nominee - {{i + 1}}</h3>
+      <input formControlName="nominee" placeholder="Enter Nominee" type="text"/>
+    </div>
+  </section>
+  <button (click)="addNominee()">Add Nominee</button>
+  <button (click)="removeNominee()">Remove Nominee</button>
+</form>
+
+<h3>Restrictions</h3>
+<form [formGroup]="restrictionsForm">
+  <section formArrayName="restrictions">
+    <div *ngFor="let restrictionGroup of restrictions?.controls; let i = index"
+         [formGroupName]="i">
+      <h3>Restriction - {{i + 1}}</h3>
+      <label for="firstName">First Name</label>
+      <input formControlName="firstName" id="firstName" type="text">
+
+      <label for="lastName">Last Name</label>
+      <input formControlName="lastName" id="lastName" type="text">
+
+      <label for="sex">Select a sex to restrict to:</label>
+      <select formControlName="sex" id="sex">
+        <option value="">Neither</option>
+        <option value="true">Male</option>
+        <option value="false">female</option>
+      </select>
+
+      <label for="dateOfBirthOlderThan">Date Of Birth Older Than</label>
+      <input formControlName="dateOfBirthOlderThan" id="dateOfBirthOlderThan" type="date"/>
+
+      <label for="dateOfBirthYoungerThan">Date Of Birth Younger Than</label>
+      <input formControlName="dateOfBirthYoungerThan" id="dateOfBirthYoungerThan" type="date"/>
+    </div>
+  </section>
+  <button (click)="addRestriction()">Add Restriction</button>
+  <button (click)="removeRestriction()">Remove Restriction</button>
+</form>
+
+<button (click)="createPoll()" type="button">Create</button>
+

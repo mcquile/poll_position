@@ -1,6 +1,6 @@
 import {User} from "./user";
 
-export interface Poll{
+export interface Poll {
   id: string;
   creator: User;
   title: string;
