@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {PollService} from "../poll.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-poll',
@@ -7,39 +9,62 @@ import {FormArray, FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./create-poll.component.css']
 })
 export class CreatePollComponent {
+
+  constructor(private pollService: PollService, private router: Router) {
+  }
   createPollForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
+    nominationEndTime: new FormControl(''),
     startTime: new FormControl(''),
-    endTime: new FormControl('')
+    endTime: new FormControl(''),
   });
 
   nomineeForm = new FormGroup({
-    nominees: new FormArray([
-      new FormGroup({
-        nominee: new FormControl(''),
-      }),
-      new FormGroup({
-        nominee: new FormControl(''),
-      })
-    ])
+    nominees: new FormArray([]),
   });
 
   restrictionsForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    sex: new FormControl(''),
-    branch: new FormControl(''),
-    dateOfBirthOlderThan: new FormGroup(''),
-    dateOfBirthYoungerThan: new FormGroup('')
+    restrictions: new FormArray([]),
   })
 
   createPoll(): void {
-    console.log(this.createPollForm.value);
-    console.log(this.restrictionsForm.value);
-    console.log(this.nomineeForm.value)
+    let request = {
+      title: this.createPollForm.value.title,
+      description: this.createPollForm.value.description,
+      voteStartTime: this.createPollForm.value.startTime,
+      voteEndTime: this.createPollForm.value.endTime,
+      nominees: this.nomineeForm.value.nominees,
+      genericRestrictions: this.restrictionsForm.value.restrictions
+    }
+    console.log(request);
+    this.router.navigateByUrl(`view-poll/${'demo'}`)
+    this.pollService.createPoll(request).subscribe(poll => {
+      console.log(poll);
+      this.router.navigateByUrl(`view-poll/${poll.pollID}`);
+    });
+
   }
 
+  removeRestriction(){
+    this.restrictions.removeAt(this.restrictions.length-1);
+  }
+  addRestriction(){
+    this.restrictions.push(
+      new FormGroup({
+        firstName: new FormControl(''),
+        lastName: new FormControl(''),
+        sex: new FormControl(''),
+        branch: new FormControl(''),
+        dateOfBirthOlderThan: new FormControl(''),
+        dateOfBirthYoungerThan: new FormControl('')
+      })
+    );
+  }
+
+  get restrictions(): FormArray {
+    return this.restrictionsForm.get('restrictions') as FormArray;
+  }
 
   get nominees(): FormArray {
     return this.nomineeForm.get('nominees') as FormArray;
@@ -51,5 +76,9 @@ export class CreatePollComponent {
         nominee: new FormControl(''),
       })
     );
+  }
+
+  removeNominee() {
+    this.nominees.removeAt(this.nominees.length-1);
   }
 }

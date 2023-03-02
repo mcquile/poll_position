@@ -5,13 +5,15 @@ import { CreatePollComponent } from './components/create-poll/create-poll.compon
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import {VotingPageComponent} from "./components/voting-page/voting-page.component";
 import {PollResultComponent} from "./components/poll-result/poll-result.component";
+import {ViewPollComponent} from "./view-poll/view-poll.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'create-poll', component: CreatePollComponent },
   { path: 'vote/:pollID', component: VotingPageComponent },
-  { path: 'results/:pollID', component: PollResultComponent }
+  { path: 'results/:pollID', component: PollResultComponent },
+  { path: 'view-poll/:id', component: ViewPollComponent },
 ];
 
 @NgModule({

@@ -6,4 +6,10 @@ export class AppSettings {
       window.location.href = path;
     }
   }
+
+  public static handleUserNotAuthenticated(): void {
+    if (localStorage.getItem('userToken') == null) {
+      window.location.href = "/";
+    }
+  }
 }

@@ -17,6 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { VotingPageComponent } from './components/voting-page/voting-page.component';
 import { PollResultComponent } from './components/poll-result/poll-result.component';
 import { CompletedPollsComponent } from './components/completed-polls/completed-polls.component';
+import {HttpClientModule} from "@angular/common/http";
+import { ViewPollComponent } from './view-poll/view-poll.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CompletedPollsComponent } from './components/completed-polls/completed-
     CreatePollComponent,
     VotingPageComponent,
     PollResultComponent,
-    CompletedPollsComponent
+    CompletedPollsComponent,
+    VotingPageComponent,
+    ViewPollComponent
   ],
     imports: [
       AppRoutingModule,

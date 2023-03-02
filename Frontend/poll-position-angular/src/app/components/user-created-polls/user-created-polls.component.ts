@@ -19,10 +19,14 @@ export class UserCreatedPollsComponent implements OnInit{
   }
 
   getUserCreatedPolls(): void {
-    this.pollService.getAllPolls().subscribe(polls => this.polls = polls.filter(poll => this.pollService.isCreatorEmailUserEmail(poll)));
+    this.pollService.getPolls().subscribe(polls => this.polls = polls.filter(poll => this.pollService.isCreatorEmailUserEmail(poll)));
   }
 
   navigateToCreatePoll():void {
       this.router.navigateByUrl('create-poll');
+  }
+
+  navigateToSpecificPoll(poll: Poll): void{
+    this.router.navigateByUrl(`view-poll/${poll.pollID}`)
   }
 }
