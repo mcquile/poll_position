@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {PollService} from "../poll.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-poll',
@@ -9,7 +10,7 @@ import {PollService} from "../poll.service";
 })
 export class CreatePollComponent {
 
-  constructor(private pollService: PollService) {
+  constructor(private pollService: PollService, private router: Router) {
   }
   createPollForm = new FormGroup({
     title: new FormControl(''),
@@ -36,8 +37,12 @@ export class CreatePollComponent {
       nominees: this.nomineeForm.value.nominees,
       genericRestrictions: this.restrictionsForm.value.restrictions
     }
-    console.log(request)
-    this.pollService.createPoll(request).subscribe(poll => console.log(poll));
+    console.log(request);
+    this.router.navigateByUrl(`view-poll/${'demo'}`)
+    this.pollService.createPoll(request).subscribe(poll => {
+      console.log(poll);
+      this.router.navigateByUrl(`view-poll/${poll.pollID}`);
+    });
 
   }
 
