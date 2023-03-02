@@ -37,6 +37,7 @@ export class PollService {
 
 
   isCreatorEmailUserEmail(poll: Poll): boolean {
-    return poll.creator.email === localStorage.getItem("email");
+    let a = JSON.parse(localStorage.getItem("currentUser") || "");
+    return poll.creator.email === a.email;
   }
 }
