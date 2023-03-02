@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.auth.dto.LoginRequestDTO;
 import org.example.auth.dto.LoginResponseDTO;
 import org.example.auth.dto.RegisterRequestDTO;
+import org.example.auth.dto.SocialAuthRequestDTO;
 import org.example.config.JwtService;
 import org.example.exceptions.InvalidLoginCredentialsException;
 import org.example.exceptions.UserAlreadyExistsException;
@@ -71,6 +72,36 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(u);
         revokeAllUserTokens(u);
         saveUserToken(u, jwtToken);
+
+        return LoginResponseDTO.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    public LoginResponseDTO oauth2Login(SocialAuthRequestDTO socialAuthRequestDTO) {
+        Optional<User> u = userRepository.findByEmail(socialAuthRequestDTO.getEmailAddress());
+        if (u.isPresent()) {
+            revokeAllUserTokens(u.get());
+            saveUserToken(u.get(), socialAuthRequestDTO.getToken());
+            User savedUser = userRepository.save(u.get());
+            String jwtToken = jwtService.generateToken(u.get());
+            saveUserToken(savedUser, jwtToken);
+            return LoginResponseDTO.builder()
+                    .token(jwtToken)
+                    .build();
+        }
+
+        User user = User.builder()
+                .firstName(socialAuthRequestDTO.getFirstname())
+                .lastName(socialAuthRequestDTO.getLastname())
+                .email(socialAuthRequestDTO.getEmailAddress())
+                .password("mIWxzaCt&0YSZqq2n^4g$ZEav#19dw2!W66HPV&s3ta2qkvjLZ")
+                .profilePicLink(socialAuthRequestDTO.getProfilePic())
+                .build();
+
+        userRepository.save(user);
+        saveUserToken(user, socialAuthRequestDTO.getToken());
+        String jwtToken = jwtService.generateToken(user);
 
         return LoginResponseDTO.builder()
                 .token(jwtToken)
